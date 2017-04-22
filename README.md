@@ -1,0 +1,3 @@
+# dotedit
+
+> simple dot editor
