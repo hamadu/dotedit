@@ -1,13 +1,17 @@
 <template>
-  <div id="app">
+  <div id="app" style="width: 100%;">
     <color-palette v-on:selectColor="selectColor" :current-color="currentColor" :color-map="colorMap" />
 
     <tool-box v-on:selectTool="selectTool" :current-tool="currentTool" />
 
-    <div style="position: relative">
+    <div style="position: relative; top: 32px;">
       <dot-canvas dotsize="16" :width="size" :height="size" :dots="dots" :color-map="colorMap" />
 
       <capture-canvas dotsize="16" :width="size" :height="size" v-on:dot="dot" />
+    </div>
+
+    <div style="position: relative; top: 32px; left: 640px;">
+      <preview-canvas dotsize="1" :width="size" :height="size" :dots="dots" :color-map="colorMap" />
     </div>
   </div>
 </template>
@@ -17,6 +21,7 @@ import ColorPalette from './ColorPalette.vue'
 import ToolBox from './ToolBox.vue'
 import DotCanvas from './DotCanvas.vue'
 import CaptureCanvas from './CaptureCanvas.vue'
+import PreviewCanvas from './PreviewCanvas.vue'
 
 const colorMap = ['#fff', '#f00', '#0f0', '#00f'];
 
@@ -57,7 +62,7 @@ export default {
     }
   },
   components: {
-    ColorPalette, ToolBox, DotCanvas, CaptureCanvas
+    ColorPalette, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas
   }
 }
 </script>
