@@ -9,7 +9,7 @@
         v-bind:style="{
           x: dotsize * Math.min(drawer.fx, drawer.tx) + 'px',
           y: dotsize * Math.min(drawer.fy, drawer.ty) + 'px',
-          fill: colorMap[drawer.color],
+          fill: colorMap.color(drawer.color),
           strokeWidth: 3 + 'px',
           stroke: '#000'
         }"

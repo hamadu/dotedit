@@ -8,15 +8,13 @@
 
     <br/>
 
-    <template v-for="(color, index) in colorMap">
+    <template v-for="(color, index) in colorMap.colors">
       <button class="palette"
-        v-bind:class="{ selected: currentColor == index }"
+        v-bind:class="{ selected: colorMap.selectedIndex == index }"
         v-bind:style="{
-          background: color
+          background: color.hex
         }"
-        v-on:click="selectColor(index)">
-          {{color}}
-      </button>
+        v-on:click="selectColor(index)" />
     </template>
 
     <br/>
@@ -24,13 +22,14 @@
     <input class="color-component" type="text" name="R" />/
     <input class="color-component" type="text" name="G" />/
     <input class="color-component" type="text" name="B" />
+    <button>Change Color</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'color-palette',
-  props: ['colorMap', 'currentColor'],
+  props: ['colorMap'],
   methods: {
     selectColor: function(id) {
       this.$emit('selectColor', id);
@@ -48,6 +47,7 @@ button.palette {
   outline: none;
   border: 1px solid #000;
   width: 64px;
+  height: 24px;
 }
 
 button.palette.selected {

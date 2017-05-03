@@ -7,7 +7,7 @@
         left: ((index % width) * dotsize) + 'px',
         width: dotsize + 'px',
         height: dotsize + 'px',
-        background: colorMap[color]}">
+        background: colorMap.color(color)}">
       </div>
     </template>
 

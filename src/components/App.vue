@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="width: 100%;">
-    <color-palette v-on:selectColor="selectColor" :current-color="currentColor" :color-map="colorMap" />
+    <color-palette v-on:selectColor="selectColor" :color-map="colorMap" />
 
     <tool-box v-on:selectTool="selectTool" :current-tool="currentTool" />
 
@@ -24,6 +24,7 @@
 
 <script>
 import Drawer from './../drawer'
+import ColorMap from './../model/color/colorMap'
 
 import ColorPalette from './ColorPalette.vue'
 import ToolBox from './ToolBox.vue'
@@ -32,7 +33,7 @@ import CaptureCanvas from './CaptureCanvas.vue'
 import PreviewCanvas from './PreviewCanvas.vue'
 import WorkCanvas from './WorkCanvas.vue'
 
-const colorMap = ['#fff', '#f00', '#0f0', '#00f'];
+const colorMap = new ColorMap();
 
 const size = 16;
 const dots = [];
@@ -61,7 +62,7 @@ export default {
   },
   methods: {
     selectColor: (id) => {
-      data.currentColor = id;
+      data.colorMap.selectColor(id);
     },
 
     selectTool: (id) => {
@@ -69,16 +70,17 @@ export default {
     },
 
     down:(y, x) => {
+      const currentColor = data.colorMap.selectedIndex;
       switch (data.currentTool) {
         case 0:
           const idx = y * data.size + x;
-          data.drawer.down('dot', y, x, data.dots[idx] === data.currentColor ? 0 : data.currentColor);
+          data.drawer.down('dot', y, x, data.dots[idx] === currentColor ? 0 : currentColor);
           break;
         case 1:
-          data.drawer.down('line', y, x, data.currentColor);
+          data.drawer.down('line', y, x, currentColor);
           break;
         case 2:
-          data.drawer.down('rect', y, x, data.currentColor);
+          data.drawer.down('rect', y, x, currentColor);
           break;
       }
     },
