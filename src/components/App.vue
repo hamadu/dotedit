@@ -12,8 +12,12 @@
       <capture-canvas dotsize="16" :width="size" :height="size" v-on:down="down" v-on:move="move" v-on:up="up" />
     </div>
 
-    <div style="position: relative; top: 32px; left: 640px;">
+    <div style="position: relative; top: 32px; left: 320px;">
       <preview-canvas dotsize="1" :width="size" :height="size" :dots="dots" :color-map="colorMap" />
+    </div>
+
+    <div style="position: relative; top: 64px; left: 320px;">
+      <preview-canvas dotsize="2" :width="size" :height="size" :dots="dots" :color-map="colorMap" />
     </div>
   </div>
 </template>

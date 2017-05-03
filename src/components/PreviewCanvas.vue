@@ -1,5 +1,5 @@
 <template>
-  <div id="canvas">
+  <div class="preview-canvas">
     <template v-for="(color, index) in dots">
       <div v-bind:style="{
         position: 'absolute',
@@ -13,7 +13,7 @@
 
     <div v-bind:style="{
       position: 'absolute',
-      border: '1px solid #000',
+      border: '1px dotted #000',
       width: (dotsize * width) + 'px',
       height: (dotsize * width) + 'px'}">
     </div>
