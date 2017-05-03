@@ -22,6 +22,7 @@
     <input class="color-component" type="text" ref="r" :value="colorMap.currentColor().r" />/
     <input class="color-component" type="text" ref="g" :value="colorMap.currentColor().g" />/
     <input class="color-component" type="text" ref="b" :value="colorMap.currentColor().b" />
+
     <button v-on:click="changeColor()">Change Color</button>
   </div>
 </template>

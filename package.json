@@ -12,12 +12,16 @@
     "vue": "^2.2.1"
   },
   "devDependencies": {
+    "assert": "^1.4.1",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-preset-latest": "^6.0.0",
+    "babel-register": "^6.24.1",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
+    "karma": "^1.6.0",
+    "mocha": "^3.3.0",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",
     "vue-loader": "^11.1.4",
