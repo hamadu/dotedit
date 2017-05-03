@@ -7,7 +7,7 @@
 </template>
 
 <script>
-const tools = ['Pencil', 'Line', 'Rect']
+const tools = ['Pencil', 'Line', 'Rect', 'Oval']
 
 export default {
   name: 'tool-box',

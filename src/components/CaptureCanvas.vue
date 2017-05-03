@@ -28,19 +28,20 @@ export default {
     down: function(event) {
       const yx = this.mouseEventToPosition(event);
       this.push = true;
-      this.$emit('dot', yx[0], yx[1]);
+      this.$emit('down', yx[0], yx[1]);
     },
 
     move: function(event) {
       if (this.push) {
         const yx = this.mouseEventToPosition(event);
-        this.$emit('dot', yx[0], yx[1]);
+        this.$emit('move', yx[0], yx[1]);
       }
     },
 
     up: function(event) {
       const yx = this.mouseEventToPosition(event);
       this.push = false;
+      this.$emit('up', yx[0], yx[1]);
     }
   }
 }

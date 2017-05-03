@@ -20,6 +20,3 @@ export default {
   props: ['dots', 'colorMap', 'dotsize', 'width', 'height']
 }
 </script>
-
-<style lang="scss">
-</style>

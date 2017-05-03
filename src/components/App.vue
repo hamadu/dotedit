@@ -7,7 +7,9 @@
     <div style="position: relative; top: 32px;">
       <dot-canvas dotsize="16" :width="size" :height="size" :dots="dots" :color-map="colorMap" />
 
-      <capture-canvas dotsize="16" :width="size" :height="size" v-on:dot="dot" />
+      <work-canvas dotsize="16" :width="size" :height="size" :color-map="colorMap" :drawer="drawer" />
+
+      <capture-canvas dotsize="16" :width="size" :height="size" v-on:down="down" v-on:move="move" v-on:up="up" />
     </div>
 
     <div style="position: relative; top: 32px; left: 640px;">
@@ -17,15 +19,18 @@
 </template>
 
 <script>
+import Drawer from './../drawer'
+
 import ColorPalette from './ColorPalette.vue'
 import ToolBox from './ToolBox.vue'
 import DotCanvas from './DotCanvas.vue'
 import CaptureCanvas from './CaptureCanvas.vue'
 import PreviewCanvas from './PreviewCanvas.vue'
+import WorkCanvas from './WorkCanvas.vue'
 
 const colorMap = ['#fff', '#f00', '#0f0', '#00f'];
 
-const size = 32;
+const size = 16;
 const dots = [];
 for (let i = 0 ; i < size ; i++) {
   for (let j = 0 ; j < size ; j++) {
@@ -33,13 +38,16 @@ for (let i = 0 ; i < size ; i++) {
   }
 }
 
+const drawer = new Drawer(size, dots);
+
 const data = {
-  dots: dots,
-  size: 32,
+  dots,
+  size,
+  colorMap,
+  drawer,
   push: false,
   currentColor: 1,
   currentTool: 0,
-  colorMap: colorMap
 };
 
 export default {
@@ -56,13 +64,31 @@ export default {
       data.currentTool = id;
     },
 
-    dot:(y, x) => {
-      const idx = y * data.size + x;
-      data.dots.splice(idx, 1, data.currentColor);
+    down:(y, x) => {
+      switch (data.currentTool) {
+        case 0:
+          const idx = y * data.size + x;
+          data.drawer.down('dot', y, x, data.dots[idx] === data.currentColor ? 0 : data.currentColor);
+          break;
+        case 1:
+          data.drawer.down('line', y, x, data.currentColor);
+          break;
+        case 2:
+          data.drawer.down('rect', y, x, data.currentColor);
+          break;
+      }
+    },
+
+    move:(y, x) => {
+      data.drawer.move(y, x);
+    },
+
+    up:(y, x) => {
+      data.drawer.up(y, x);
     }
   },
   components: {
-    ColorPalette, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas
+    ColorPalette, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas, WorkCanvas
   }
 }
 </script>
