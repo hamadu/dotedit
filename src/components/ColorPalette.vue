@@ -19,10 +19,10 @@
 
     <br/>
 
-    <input class="color-component" type="text" name="R" />/
-    <input class="color-component" type="text" name="G" />/
-    <input class="color-component" type="text" name="B" />
-    <button>Change Color</button>
+    <input class="color-component" type="text" ref="r" :value="colorMap.currentColor().r" />/
+    <input class="color-component" type="text" ref="g" :value="colorMap.currentColor().g" />/
+    <input class="color-component" type="text" ref="b" :value="colorMap.currentColor().b" />
+    <button v-on:click="changeColor()">Change Color</button>
   </div>
 </template>
 
@@ -31,8 +31,18 @@ export default {
   name: 'color-palette',
   props: ['colorMap'],
   methods: {
+    changeColorSet: function(value) {
+    },
+
     selectColor: function(id) {
       this.$emit('selectColor', id);
+    },
+
+    changeColor: function() {
+      const red   = parseInt(this.$refs.r.value) || 0;
+      const green = parseInt(this.$refs.g.value) || 0;
+      const blue  = parseInt(this.$refs.b.value) || 0;
+      this.$emit('changeColor', red, green, blue);
     }
   }
 }

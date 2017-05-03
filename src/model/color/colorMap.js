@@ -14,12 +14,16 @@ export default class ColorMap {
     return this.colors[idx].hex;
   }
 
+  currentColor() {
+    return this.colors[this.selectedIndex];
+  }
+
   selectColor(idx) {
     this.selectedIndex = idx;
   }
 
-  changeColor(idx, toHex) {
-    this.colors.splice(idx, 1, Color.makeColorFromHEX(toHex));
+  changeColor(idx, r, g, b) {
+    this.colors.splice(idx, 1, Color.fromRGB(r, g, b));
   }
 
   static default() {

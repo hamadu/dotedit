@@ -15,6 +15,10 @@ export default class Color {
     return new Color(...Color.hexToRGB(hex));
   }
 
+  static fromRGB(r, g, b) {
+    return new Color(r, g, b);
+  }
+
   static rgbToHEX(r, g, b) {
     return '#' + Color.intToHex(r) + Color.intToHex(g) + Color.intToHex(b);
   }
