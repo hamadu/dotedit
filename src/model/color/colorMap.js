@@ -2,11 +2,21 @@ import Color from './color'
 
 export default class ColorMap {
   constructor() {
-    this.colors = ColorMap.default().map(color => Color.fromHEX(color));
+    this.colorSets = ['default', 'gameboy', 'gray'];
+    this.colors = ColorMap.default();
     this.selectedIndex = 0;
   }
 
-  changeColorSet(colors) {
+  changeColorSet(colorSet) {
+    let colors = ColorMap.default();
+    switch (colorSet) {
+      case 'gameboy':
+        colors = ColorMap.gameboy();
+        break;
+      case 'gray':
+        colors = ColorMap.gray();
+        break;
+    }
     this.colors = colors;
   }
 
@@ -27,14 +37,14 @@ export default class ColorMap {
   }
 
   static default() {
-    return ['#336699', '#000000', '#ff0000', '#00ff00', '#0000ff', '#ffffff'];
+    return ['#336699', '#000000', '#ff3333', '#33ff33', '#3333ff', '#888888', '#ffffff'].map(color => Color.fromHEX(color));
   }
 
   static gameboy() {
-    return ['#999999', '#0F380F', '#306230', '#8bac0f', '#9bbc0f'];
+    return ['#999999', '#0F380F', '#306230', '#8bac0f', '#9bbc0f', '#ffffff', '#ffffff'].map(color => Color.fromHEX(color));
   }
 
   static gray() {
-    return ['#369', '#000', '#333', '#666', '#999', '#ccc', '#fff'];
+    return ['#336699', '#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff'].map(color => Color.fromHEX(color));
   }
 }

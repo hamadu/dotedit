@@ -3,6 +3,7 @@
     <color-palette
       v-on:selectColor="selectColor"
       v-on:changeColor="changeColor"
+      v-on:changeColorSet="changeColorSet"
       :color-map="colorMap" />
 
     <tool-box v-on:selectTool="selectTool" :current-tool="currentTool" />
@@ -70,6 +71,10 @@ export default {
 
     changeColor: (r, g, b) => {
       data.colorMap.changeColor(data.colorMap.selectedIndex, r, g, b);
+    },
+
+    changeColorSet: (name) => {
+      data.colorMap.changeColorSet(name);
     },
 
     selectTool: (id) => {

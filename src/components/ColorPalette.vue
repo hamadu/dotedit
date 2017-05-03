@@ -1,9 +1,9 @@
 <template>
   <div id="palette">
-    <select>
-      <option>Default</option>
-      <option>GB</option>
-      <option>Mono</option>
+    <select ref="colorSet" v-on:change="changeColorSet">
+      <template v-for="name in colorMap.colorSets">
+        <option :value="name">{{name}}</option>
+      </template>
     </select>
 
     <br/>
@@ -31,7 +31,9 @@ export default {
   name: 'color-palette',
   props: ['colorMap'],
   methods: {
-    changeColorSet: function(value) {
+    changeColorSet: function() {
+      const colorSetName = this.$refs.colorSet.value;
+      this.$emit('changeColorSet', colorSetName);
     },
 
     selectColor: function(id) {
