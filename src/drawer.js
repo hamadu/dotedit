@@ -4,6 +4,8 @@ export default class Drawer {
   constructor(size, dots) {
     this.size = size;
     this.dots = dots;
+    this.mode = 'none';
+    this.fx = this.fy = this.tx = this.ty = 0;
   }
 
   down(mode, y, x, color) {
@@ -59,11 +61,15 @@ export default class Drawer {
 
   fillRect() {
     const row = [];
-    for (let x = this.fx ; x <= this.tx ; x++) {
+    const minX = Math.min(this.fx, this.tx);
+    const maxX = Math.max(this.fx, this.tx);
+    for (let x = minX ; x <= maxX ; x++) {
       row.push(this.color);
     }
-    for (let y = this.fy ; y <= this.ty ; y++) {
-      this.dots.splice(y * this.size + this.fx, row.length, ...row);
+    const minY = Math.min(this.fy, this.ty);
+    const maxY = Math.max(this.fy, this.ty);
+    for (let y = minY ; y <= maxY ; y++) {
+      this.dots.splice(y * this.size + minX, row.length, ...row);
     }
   }
 
