@@ -25,13 +25,28 @@ export default class Drawer {
     }
   }
 
-  move(y, x) {
+  move(oldDots, y, x) {
     this.tx = x;
     this.ty = y;
+
+    if (this.mode !== 'dot') {
+      if (this.lastY != y || this.lastX != x) {
+        this.dots.splice(0, oldDots.length, ...oldDots);
+      }
+    }
 
     switch (this.mode) {
       case 'dot':
         this.line(this.lastY, this.lastX, y, x);
+        break;
+      case 'line':
+        this.line(this.fy, this.fx, y, x);
+        break;
+      case 'rect':
+        this.rect(this.fy, this.fx, y, x);
+        break;
+      case 'oval':
+        this.oval(this.fy, this.fx, y, x);
         break;
     }
     this.lastY = y;

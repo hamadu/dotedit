@@ -27,7 +27,7 @@
         :height="512 / magnify"
         :offset-y="offsetY"
         :offset-x="offsetX"
-        v-on:down="down" 
+        v-on:down="down"
         v-on:move="move"
         v-on:up="up" />
     </div>
@@ -75,18 +75,20 @@ const magnify = 16;
 
 const drawer = new Drawer(size, dots);
 
+const histories = [];
+
 const data = {
   offsetY,
   offsetX,
   dots,
+  histories,
   size,
   colorMap,
   drawer,
   magnify,
   push: false,
   currentColor: 1,
-  currentTool: 0,
-
+  currentTool: 0
 };
 
 export default {
@@ -94,6 +96,7 @@ export default {
   data: () => {
     return data
   },
+
   methods: {
     selectColor: function(id) {
       data.colorMap.selectColor(id);
@@ -125,6 +128,8 @@ export default {
     },
 
     down: function(y, x) {
+      this.histories.push(this.dots.slice());
+
       const currentColor = data.colorMap.selectedIndex;
       switch (data.currentTool) {
         case 0:
@@ -144,11 +149,12 @@ export default {
     },
 
     move: function(y, x) {
-      data.drawer.move(y, x);
+      data.drawer.move(this.histories[0], y, x);
     },
 
     up: function(y, x) {
       data.drawer.up(y, x);
+      this.histories = [];
     }
   },
   components: {
