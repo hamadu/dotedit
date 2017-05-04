@@ -1,6 +1,6 @@
 <template>
   <div class="preview-canvas">
-    <template v-for="(color, index) in dots">
+    <!-- <template v-for="(color, index) in dots">
       <div v-bind:style="{
         position: 'absolute',
         top: (Math.floor(index / width) * dotsize) + 'px',
@@ -9,7 +9,15 @@
         height: dotsize + 'px',
         background: colorMap.color(color)}">
       </div>
-    </template>
+    </template> -->
+    <canvas ref="previewCanvas"
+      :width="dotsize * width"
+      :height="dotsize * height"
+      v-bind:style="{
+        position: 'absolute'
+      }"
+    >
+    </canvas>
 
     <div v-bind:style="{
       position: 'absolute',
@@ -23,7 +31,18 @@
 <script>
 export default {
   name: 'preview-canvas',
-  props: ['dots', 'colorMap', 'dotsize', 'width', 'height']
+  props: ['dots', 'colorMap', 'dotsize', 'width', 'height'],
+  methods: {
+    update: function(dots, colorMap) {
+      const ctx = this.$refs.previewCanvas.getContext('2d');
+      for (var y = 0 ; y < this.height ; y++) {
+        for (var x = 0 ; x < this.width ; x++) {
+          ctx.fillStyle = colorMap.color(dots[y*this.width+x]);
+          ctx.fillRect(x * this.dotsize, y * this.dotsize, this.dotsize, this.dotsize);
+        }
+      }
+    }
+  }
 }
 </script>
 

@@ -33,7 +33,6 @@ export default {
       ctx.fillRect(fx * this.dotsize, fy * this.dotsize, w * this.dotsize, h * this.dotsize);
     },
     update: function(dots, colorMap) {
-      console.log('clipping');
       const ctx = this.$refs.dotCanvas.getContext('2d');
       for (var y = 0 ; y < this.height ; y++) {
         for (var x = 0 ; x < this.width ; x++) {
@@ -41,32 +40,31 @@ export default {
           ctx.fillRect(x * this.dotsize, y * this.dotsize, this.dotsize, this.dotsize);
         }
       }
-    }
-  },
-  updated: function() {
-    console.log('upd');
-  },
-  mounted: function() {
-    const gridCanvas = this.$refs.gridCanvas;
-    const ctx = gridCanvas.getContext('2d');
+    },
+    drawGrid: function() {
+      const gridCanvas = this.$refs.gridCanvas;
+      const ctx = gridCanvas.getContext('2d');
+      ctx.clearRect(0, 0, this.height * this.dotsize, this.width * this.dotsize);
+      ctx.strokeStyle = 'rgba(127, 127, 127, 0.5)';
+      for (var y = 0 ; y < this.height ; y++) {
+        for (var x = 0 ; x < this.width ; x++) {
+          ctx.beginPath();
 
-    ctx.clearRect(0, 0, this.height * this.dotsize, this.width * this.dotsize);
-    ctx.strokeStyle = 'rgba(127, 127, 127, 0.5)';
-    for (var y = 0 ; y < this.height ; y++) {
-      for (var x = 0 ; x < this.width ; x++) {
-        ctx.beginPath();
+          // holizontal
+          ctx.moveTo(x * this.dotsize, y * this.dotsize);
+          ctx.lineTo(x * this.dotsize + (this.dotsize - 1), y * this.dotsize);
 
-        // holizontal
-        ctx.moveTo(x * this.dotsize, y * this.dotsize);
-        ctx.lineTo(x * this.dotsize + (this.dotsize - 1), y * this.dotsize);
+          // vertical
+          ctx.moveTo(x * this.dotsize, y * this.dotsize);
+          ctx.lineTo(x * this.dotsize, y * this.dotsize + (this.dotsize - 1));
 
-        // vertical
-        ctx.moveTo(x * this.dotsize, y * this.dotsize);
-        ctx.lineTo(x * this.dotsize, y * this.dotsize + (this.dotsize - 1));
-
-        ctx.stroke();
+          ctx.stroke();
+        }
       }
     }
+  },
+  mounted: function() {
+    this.drawGrid();
   }
 }
 </script>

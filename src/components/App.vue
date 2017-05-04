@@ -9,11 +9,11 @@
     <tool-box v-on:selectTool="selectTool" :current-tool="currentTool" />
 
     <div style="position: relative; top: 32px;">
-      <dot-canvas ref="dotCanvas" dotsize="8" :width="size" :height="size" :offset-x="0" :offset-y="0" :dots="dots" :color-map="colorMap" />
+      <dot-canvas ref="dotCanvas" dotsize="16" :width="size" :height="size" :offset-x="0" :offset-y="0" :dots="dots" :color-map="colorMap" />
 
-      <work-canvas dotsize="8" :width="size" :height="size" :color-map="colorMap" :drawer="drawer" />
+      <work-canvas dotsize="16" :width="size" :height="size" :color-map="colorMap" :drawer="drawer" />
 
-      <capture-canvas dotsize="8" :width="size" :height="size" v-on:down="down" v-on:move="move" v-on:up="up" />
+      <capture-canvas dotsize="16" :width="size" :height="size" v-on:down="down" v-on:move="move" v-on:up="up" />
     </div>
 
     <div style="position: relative; top: 32px; left: 640px;">
@@ -35,7 +35,7 @@ import WorkCanvas from './WorkCanvas.vue'
 
 const colorMap = new ColorMap();
 
-const size = 64;
+const size = 32;
 const dots = [];
 for (let i = 0 ; i < size ; i++) {
   for (let j = 0 ; j < size ; j++) {
@@ -60,17 +60,23 @@ export default {
   data: () => {
     return data
   },
+  mounted: function() {
+    this.updateCanvases();
+  },
   methods: {
     selectColor: (id) => {
       data.colorMap.selectColor(id);
+      this.updateCanvases();
     },
 
     changeColor: (r, g, b) => {
       data.colorMap.changeColor(data.colorMap.selectedIndex, r, g, b);
+      this.updateCanvases();
     },
 
     changeColorSet: (name) => {
       data.colorMap.changeColorSet(name);
+      this.updateCanvases();
     },
 
     selectTool: (id) => {
@@ -78,8 +84,6 @@ export default {
     },
 
     down: function(y, x) {
-      // this.$refs.dotCanvas.drawRect(1, 2, 3, 4, '#996633');
-
       const currentColor = data.colorMap.selectedIndex;
       switch (data.currentTool) {
         case 0:
@@ -93,18 +97,22 @@ export default {
           data.drawer.down('rect', y, x, currentColor);
           break;
       }
-      this.$refs.dotCanvas.update(this.dots, this.colorMap);
-
+      this.updateCanvases();
     },
 
     move: function(y, x) {
       data.drawer.move(y, x);
-      this.$refs.dotCanvas.update(this.dots, this.colorMap);
+      this.updateCanvases();
     },
 
     up: function(y, x) {
       data.drawer.up(y, x);
+      this.updateCanvases();
+    },
+
+    updateCanvases: function() {
       this.$refs.dotCanvas.update(this.dots, this.colorMap);
+      this.$refs.previewCanvas.update(this.dots, this.colorMap);
     }
   },
   components: {

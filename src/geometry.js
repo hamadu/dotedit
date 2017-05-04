@@ -1,37 +1,37 @@
 export default class Geometry {
   static lineToDots(fy, fx, ty, tx) {
     const dots = [];
-    if (tx < fx) {
-      return lineToDots(ty, tx, fy, fx);
-    } else if (fx == tx) {
-      while (fy != ty) {
-        dots.push([Math.floor(fy), Math.floor(fx)]);
-        fy += (ty - fy >= 1) ? 1 : -1;
+    if (tx == fx) {
+      for (let y = fy ; ; y += (ty > fy) ? 1 : -1) {
+        dots.push([y, fx]);
+        if (y == ty) {
+          break;
+        }
       }
-      dots.push([fy, fx]);
-    } else if (fy == ty) {
-      while (fx != tx) {
-        dots.push([Math.floor(fy), Math.floor(fx)]);
-        fx += 1;
-      }
-      dots.push([fy, fx]);
     } else {
-      const diff = (ty - fy) / (tx - fx + 1);
-      while (fx <= tx) {
-        const tty = fy + diff;
-        if (diff >= 0) {
-          while (fy <= tty) {
-            dots.push([Math.floor(fy), Math.round(fx)]);
-            fy += 1;
-          }
-        } else {
-          while (fy >= tty) {
-            dots.push([Math.floor(fy), Math.round(fx)]);
-            fy -= 1;
+      const dy = 1.0 * (ty - fy) / (Math.abs(tx - fx) + 1);
+      let nowy = fy;
+      for (var x = fx ; ; x += (tx > fx) ? 1 : -1) {
+        const tty = fy+dy*(Math.abs(x-fx)+1)-((ty > fy) ? 0.5 : -0.5);
+        dots.push([nowy, x]);
+        while (true) {
+          if (dy > 0) {
+            if (nowy >= tty) {
+              break;
+            }
+            dots.push([nowy, x]);
+            nowy++;
+          } else {
+            if (nowy <= tty) {
+              break;
+            }
+            dots.push([nowy, x]);
+            nowy--;
           }
         }
-        fy = tty;
-        fx += 1;
+        if (x == tx) {
+          break;
+        }
       }
     }
     return dots;
