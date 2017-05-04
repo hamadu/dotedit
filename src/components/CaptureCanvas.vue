@@ -17,12 +17,12 @@ export default {
   data: () => {
     return { push: false }
   },
-  props: ['dotsize', 'width', 'height'],
+  props: ['dotsize', 'width', 'height', 'offsetX', 'offsetY'],
   methods: {
     mouseEventToPosition: function(event) {
       const x = Math.floor(event.offsetX / this.dotsize);
       const y = Math.floor(event.offsetY / this.dotsize);
-      return [y, x];
+      return [y + this.offsetY, x + this.offsetX];
     },
 
     down: function(event) {
@@ -46,6 +46,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-</style>

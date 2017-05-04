@@ -40,13 +40,14 @@ export default class Drawer {
 
   up(y, x) {
     switch (this.mode) {
-      case 'oval':
-        break;
       case 'line':
         this.line(this.fy, this.fx, y, x);
         break;
       case 'rect':
-        this.fillRect(this.fy, this.fx, y, x);
+        this.rect(this.fy, this.fx, y, x);
+        break;
+      case 'oval':
+        this.oval(this.fy, this.fx, y, x);
         break;
     }
     this.mode = 'none';
@@ -54,16 +55,28 @@ export default class Drawer {
 
   dot(y, x) {
     const idx = y * this.size + x;
-    this.dots.splice(idx, 1, this.color);
+    if (this.dots[idx] != this.color) {
+      this.dots.splice(idx, 1, this.color);
+    }
   }
 
   line(fy, fx, ty, tx) {
-    Geometry.lineToDots(fy, fx, ty, tx).forEach(dot => {
+    Geometry.line(fy, fx, ty, tx).forEach(dot => {
       this.dot(dot[0], dot[1]);
     });
   }
 
+  oval(fy, fx, ty, tx) {
+    Geometry.oval(fy, fx, ty, tx).forEach(dot => {
+      this.dot(dot[0], dot[1]);
+    });
+  }
 
+  rect(fy, fx, ty, tx) {
+    Geometry.rect(fy, fx, ty, tx).forEach(dot => {
+      this.dot(dot[0], dot[1]);
+    });
+  }
 
   fillRect(fy, fx, ty, tx) {
     const row = [];
