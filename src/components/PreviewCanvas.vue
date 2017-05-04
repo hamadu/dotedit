@@ -1,9 +1,24 @@
 <template>
   <div class="preview-canvas">
+    <div
+      v-on:mousedown="down"
+      v-on:mousemove="move"
+      v-on:mouseup="up"
+      v-on:mouseleave="leave"
+      v-bind:style="{
+        zIndex: 1,
+        position: 'absolute',
+        left: offsetX + 'px',
+        top: offsetY + 'px',
+        width: windowSize + 'px',
+        height: windowSize + 'px',
+        border: '1px solid #f00'
+      }"
+    />
+
     <canvas ref="previewCanvas"
       :width="width"
       :height="height"
-      v-on:click="previewClicked"
       v-bind:style="{
         border: '1px dashed #000',
         position: 'absolute'
@@ -11,15 +26,6 @@
     >
     </canvas>
 
-    <div v-bind:style="{
-      position: 'absolute',
-      left: offsetX + 'px',
-      top: offsetY + 'px',
-      width: windowSize + 'px',
-      height: windowSize + 'px',
-      border: '1px solid #f00'
-      }"
-    />
   </div>
 </template>
 
@@ -27,6 +33,9 @@
 export default {
   name: 'preview-canvas',
   props: ['dots', 'colorMap', 'dotsize', 'width', 'height', 'offsetX', 'offsetY', 'windowSize'],
+  data: () => {
+    return { push: false }
+  },
   mounted: function() {
     this.update();
   },
@@ -40,10 +49,33 @@ export default {
     }
   },
   methods: {
-    previewClicked: function(event) {
-      const x = Math.min(this.width-this.windowSize, event.offsetX);
-      const y = Math.min(this.height-this.windowSize, event.offsetY);
-      this.$emit('changeOffset', y, x);
+    getNewOffset: function(event) {
+      const x = Math.max(0, Math.min(this.width-this.windowSize, this.offsetX + event.offsetX - (this.windowSize >> 1)));
+      const y = Math.max(0, Math.min(this.height-this.windowSize, this.offsetY + event.offsetY - (this.windowSize >> 1)));
+      return [y, x];
+    },
+
+    down: function(event) {
+      const yx = this.getNewOffset(event);
+      this.push = true;
+      this.$emit('changeOffset', yx[0], yx[1]);
+    },
+
+    move: function(event) {
+      if (this.push) {
+        const yx = this.getNewOffset(event);
+        this.$emit('changeOffset', yx[0], yx[1]);
+      }
+    },
+
+    up: function(event) {
+      const yx = this.getNewOffset(event);
+      this.push = false;
+      this.$emit('changeOffset', yx[0], yx[1]);
+    },
+
+    leave: function(event) {
+      this.push = false;
     },
 
     update: function() {
