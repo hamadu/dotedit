@@ -19,11 +19,9 @@
 
     <br/>
 
-    <input class="color-component" type="text" ref="r" :value="colorMap.currentColor().r" />/
-    <input class="color-component" type="text" ref="g" :value="colorMap.currentColor().g" />/
-    <input class="color-component" type="text" ref="b" :value="colorMap.currentColor().b" />
-
-    <button v-on:click="changeColor()">Change Color</button>
+    R:<input type="range" min="0" max="255" ref="r" v-on:input="changeColor()" :value="colorMap.currentColor().r" /> {{colorMap.currentColor().r}}<br/>
+    G:<input type="range" min="0" max="255" ref="g" v-on:input="changeColor()" :value="colorMap.currentColor().g" /> {{colorMap.currentColor().g}}<br/>
+    B:<input type="range" min="0" max="255" ref="b" v-on:input="changeColor()" :value="colorMap.currentColor().b" /> {{colorMap.currentColor().b}}<br/>
   </div>
 </template>
 
