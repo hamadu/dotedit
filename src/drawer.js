@@ -51,6 +51,7 @@ export default class Drawer {
   dot(y, x) {
     const idx = y * this.size + x;
     this.dots.splice(idx, 1, this.color);
+    // 
   }
 
   line() {
