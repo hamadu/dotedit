@@ -10,39 +10,50 @@
 
     <scale-adjuster :magnify="magnify" v-on:scaleUp="scaleUp" v-on:scaleDown="scaleDown" />
 
-    <div style="position: relative; top: 32px;">
-      <dot-canvas ref="dotCanvas"
-        :dotsize="magnify"
-        :width="512 / magnify"
-        :height="512 / magnify"
-        :offset-y="offsetY"
-        :offset-x="offsetX"
-        :dots="dots"
-        :color-map="colorMap"
-      />
+    <div id="main" style="display: flex;">
+      <div class="dot"  style="position: relative; top: 32px;">
+        <dot-canvas ref="dotCanvas"
+          :dotsize="magnify"
+          :width="512 / magnify"
+          :height="512 / magnify"
+          :offset-y="offsetY"
+          :offset-x="offsetX"
+          :dots="dots"
+          :color-map="colorMap"
+        />
 
-      <capture-canvas
-        :dotsize="magnify"
-        :width="512 / magnify"
-        :height="512 / magnify"
-        :offset-y="offsetY"
-        :offset-x="offsetX"
-        v-on:down="down"
-        v-on:move="move"
-        v-on:up="up" />
-    </div>
+        <capture-canvas
+          :dotsize="magnify"
+          :width="512 / magnify"
+          :height="512 / magnify"
+          :offset-y="offsetY"
+          :offset-x="offsetX"
+          v-on:down="down"
+          v-on:move="move"
+          v-on:up="up" />
+      </div>
 
-    <div style="position: relative; top: 32px; left: 640px;">
-      <preview-canvas ref="previewCanvas"
-        :width="size"
-        :height="size"
-        :offset-y="offsetY"
-        :offset-x="offsetX"
-        :window-size="512 / magnify"
-        :dots="dots"
-        :color-map="colorMap"
-        v-on:changeOffset="changeOffset"
-      />
+      <div class="preview" style="position: relative; top: 32px; left: 640px;">
+        <preview-canvas ref="previewCanvas"
+          :width="size"
+          :height="size"
+          :offset-y="offsetY"
+          :offset-x="offsetX"
+          :window-size="512 / magnify"
+          :dots="dots"
+          :color-map="colorMap"
+          v-on:changeOffset="changeOffset"
+        />
+      </div>
+
+      <div class="info" style="position: relative; top: 128px; left: 640px;">
+        <cursor-info
+          :y="cursorY"
+          :x="cursorX"
+          :dots="dots"
+          :color-map="colorMap"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -57,6 +68,7 @@ import ScaleAdjuster from './ScaleAdjuster.vue'
 import DotCanvas from './DotCanvas.vue'
 import CaptureCanvas from './CaptureCanvas.vue'
 import PreviewCanvas from './PreviewCanvas.vue'
+import CursorInfo from './CursorInfo.vue'
 import WorkCanvas from './WorkCanvas.vue'
 
 const colorMap = new ColorMap();
@@ -78,6 +90,8 @@ const drawer = new Drawer(size, dots);
 const histories = [];
 
 const data = {
+  cursorX: 0,
+  cursorY: 0,
   offsetY,
   offsetX,
   dots,
@@ -148,8 +162,12 @@ export default {
       }
     },
 
-    move: function(y, x) {
-      data.drawer.move(this.histories[0], y, x);
+    move: function(y, x, pushed) {
+      if (pushed) {
+        data.drawer.move(this.histories[0], y, x);
+      }
+      this.cursorX = x;
+      this.cursorY = y;
     },
 
     up: function(y, x) {
@@ -158,7 +176,7 @@ export default {
     }
   },
   components: {
-    ColorPalette, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas, WorkCanvas, ScaleAdjuster
+    ColorPalette, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas, WorkCanvas, ScaleAdjuster, CursorInfo
   }
 }
 </script>

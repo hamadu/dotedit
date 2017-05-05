@@ -32,10 +32,8 @@ export default {
     },
 
     move: function(event) {
-      if (this.push) {
-        const yx = this.mouseEventToPosition(event);
-        this.$emit('move', yx[0], yx[1]);
-      }
+      const yx = this.mouseEventToPosition(event);
+      this.$emit('move', yx[0], yx[1], this.push);
     },
 
     up: function(event) {
