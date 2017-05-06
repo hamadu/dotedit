@@ -1,11 +1,7 @@
 <template>
   <div id="app" style="width: 100%;">
     <div id="header">
-      <color-palette
-        v-on:selectColor="selectColor"
-        v-on:changeColor="changeColor"
-        v-on:changeColorSet="changeColorSet"
-        :color-map="colorMap" />
+      <color-palette :color-map="colorMap" />
 
       <i-o-tool v-on:save="save" v-on:loadFromFile="loadFromFile" />
 
@@ -127,21 +123,9 @@ export default {
     loadFromFile: function(file) {
       const canvas = this.$refs.previewCanvas.$refs.previewCanvas;
       IO.loadFromFile(file, canvas, (dots, colorSet) => {
-        this.colorMap.changeColorSet(colorSet);
+        this.colorMap.addColorSet(colorSet);
         this.dots.splice(0, dots.length, ...dots);
       });
-    },
-
-    selectColor: function(id) {
-      data.colorMap.selectColor(id);
-    },
-
-    changeColor: function(r, g, b) {
-      data.colorMap.changeColor(data.colorMap.selectedIndex, r, g, b);
-    },
-
-    changeColorSet: function(name) {
-      data.colorMap.changeColorSet(name);
     },
 
     scaleUp: function() {
@@ -158,7 +142,7 @@ export default {
     },
 
     down: function(y, x) {
-      this.toolSet.currentTool.down(this.drawer, y, x, this.colorMap.selectedIndex);
+      this.toolSet.currentTool.down(this.drawer, y, x, this.colorMap.selectedColorIndex);
     },
 
     move: function(y, x, pushed) {

@@ -1,16 +1,16 @@
 <template>
   <div id="palette">
     <select ref="colorSet" v-on:change="changeColorSet">
-      <template v-for="name in colorMap.colorSets">
-        <option :value="name">{{name}}</option>
+      <template v-for="(colorSet, index) in colorMap.colorSets">
+        <option :value="index">{{colorSet.name}}</option>
       </template>
     </select>
 
     <br/>
 
-    <template v-for="(color, index) in colorMap.colors">
+    <template v-for="(color, index) in colorMap.colors()">
       <button class="palette"
-        v-bind:class="{ selected: colorMap.selectedIndex == index }"
+        v-bind:class="{ selected: colorMap.selectedColorIndex == index }"
         v-bind:style="{
           background: color.hex
         }"
@@ -31,22 +31,23 @@ export default {
   props: ['colorMap'],
   methods: {
     changeColorSet: function() {
-      const colorSetName = this.$refs.colorSet.value;
-      this.$emit('changeColorSet', colorSetName);
+      const colorSetIndex = this.$refs.colorSet.value;
+      this.colorMap.changeColorSet(this.colorMap.colorSets[colorSetIndex]);
     },
 
     selectColor: function(id) {
-      this.$emit('selectColor', id);
+      this.colorMap.selectColor(id);
     },
 
     changeColor: function() {
-      const red   = parseInt(this.$refs.r.value) || 0;
-      const green = parseInt(this.$refs.g.value) || 0;
-      const blue  = parseInt(this.$refs.b.value) || 0;
-      this.$emit('changeColor', red, green, blue);
+      const r = parseInt(this.$refs.r.value) || 0;
+      const g = parseInt(this.$refs.g.value) || 0;
+      const b = parseInt(this.$refs.b.value) || 0;
+      this.colorMap.changeColor(this.colorMap.selectedColorIndex, r, g, b);
     }
   }
 }
+
 </script>
 
 <style lang="scss">

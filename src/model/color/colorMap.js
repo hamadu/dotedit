@@ -3,44 +3,32 @@ import ColorSet from './colorSet'
 
 export default class ColorMap {
   constructor() {
-    this.colorSets = ['default', 'gameboy', 'gray'];
-    this.colors = ColorSet.default();
-    this.selectedIndex = 0;
+    this.colorSets = [ColorSet.default(), ColorSet.gameboy(), ColorSet.gray()];
+    this.currentColorSet = ColorSet.default();
+    this.selectedColorIndex = 0;
   }
 
   changeColorSet(colorSet) {
-    let colors = [];
-    switch (colorSet) {
-      case 'gameboy':
-        colors = ColorSet.gameboy();
-        break;
-      case 'gray':
-        colors = ColorSet.gray();
-        break;
+    this.currentColorSet = colorSet;
+  }
 
-      case 'default':
-        colors = ColorSet.default();
-        break;
-    }
-    if (colors.length == 0) {
-      colors = colorSet.colors;
-    }
-    this.colors = colors;
+  colors() {
+    return this.currentColorSet.colors;
   }
 
   color(idx) {
-    return this.colors[idx].hex;
+    return this.currentColorSet.colors[idx].hex;
   }
 
   currentColor() {
-    return this.colors[this.selectedIndex];
+    return this.currentColorSet.colors[this.selectedColorIndex];
   }
 
   selectColor(idx) {
-    this.selectedIndex = idx;
+    this.selectedColorIndex = idx;
   }
 
   changeColor(idx, r, g, b) {
-    this.colors.splice(idx, 1, Color.fromRGB(r, g, b));
+    this.currentColorSet.colors.splice(idx, 1, Color.fromRGB(r, g, b));
   }
 }
