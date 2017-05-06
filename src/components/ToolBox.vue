@@ -1,23 +1,19 @@
 <template>
   <div id="toolbox">
-    <template v-for="(name, index) in tools">
-      <button v-bind:class="{ selected: currentTool == index }" v-on:click="selectTool(index)">{{name}}</button>
+    <template v-for="(tool, index) in toolSet.tools">
+      <button v-bind:class="{ selected: toolSet.currentTool == tool }" v-on:click="selectTool(tool)">{{tool.name}}</button>
     </template>
   </div>
 </template>
 
 <script>
-const tools = ['Pencil', 'Line', 'Rect', 'Oval']
-
+// const tools = ['Pencil', 'Line', 'Rect', 'Oval', 'Bucket']
 export default {
   name: 'tool-box',
-  data: () => {
-    return { tools }
-  },
-  props: ['currentTool'],
+  props: ['toolSet'],
   methods: {
-    selectTool: function(id) {
-      this.$emit('selectTool', id);
+    selectTool: function(tool) {
+      this.toolSet.selectTool(tool)
     }
   }
 }

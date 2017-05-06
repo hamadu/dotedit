@@ -68,28 +68,28 @@ export default class Drawer {
     this.mode = 'none';
   }
 
-  dot(y, x) {
+  dot(y, x, color) {
     const idx = y * this.size + x;
-    if (this.dots[idx] != this.color) {
-      this.dots.splice(idx, 1, this.color);
+    if (this.dots[idx] != color) {
+      this.dots.splice(idx, 1, color);
     }
   }
 
-  line(fy, fx, ty, tx) {
+  line(fy, fx, ty, tx, color) {
     Geometry.line(fy, fx, ty, tx).forEach(dot => {
-      this.dot(dot[0], dot[1]);
+      this.dot(dot[0], dot[1], color);
     });
   }
 
-  oval(fy, fx, ty, tx) {
+  oval(fy, fx, ty, tx, color) {
     Geometry.oval(fy, fx, ty, tx).forEach(dot => {
-      this.dot(dot[0], dot[1]);
+      this.dot(dot[0], dot[1], color);
     });
   }
 
-  rect(fy, fx, ty, tx) {
+  rect(fy, fx, ty, tx, color) {
     Geometry.rect(fy, fx, ty, tx).forEach(dot => {
-      this.dot(dot[0], dot[1]);
+      this.dot(dot[0], dot[1], color);
     });
   }
 
@@ -105,13 +105,5 @@ export default class Drawer {
     for (let y = minY ; y <= maxY ; y++) {
       this.dots.splice(y * this.size + minX, row.length, ...row);
     }
-  }
-
-  static line(fx, fy, tx, ty) {
-    return [[fx, fy], [tx, ty]];
-  }
-
-  static oval(fx, fy, tx, ty) {
-    return [[fx, fy], [tx, fy], [fx, ty], [tx, ty]];
   }
 }

@@ -9,7 +9,7 @@
 
       <i-o-tool v-on:save="save" v-on:loadFromFile="loadFromFile" />
 
-      <tool-box v-on:selectTool="selectTool" :current-tool="currentTool" />
+      <tool-box :tool-set="toolSet" v-on:selectTool="selectTool" :current-tool="currentTool" />
 
       <scale-adjuster :magnify="magnify" v-on:scaleUp="scaleUp" v-on:scaleDown="scaleDown" />
     </div>
@@ -65,6 +65,7 @@
 <script>
 import Drawer from './../drawer'
 import ColorMap from './../model/color/colorMap'
+import ToolSet from './../model/tool/toolSet'
 import IO from './../io'
 
 import ColorPalette from './ColorPalette.vue'
@@ -104,6 +105,7 @@ const data = {
   histories,
   size,
   colorMap,
+  toolSet: ToolSet.getInstance(),
   drawer,
   magnify,
   push: false,
@@ -160,29 +162,31 @@ export default {
     },
 
     down: function(y, x) {
-      this.histories.push(this.dots.slice());
+      this.toolSet.currentTool.down(this.drawer, y, x, this.colorMap.selectedIndex);
 
-      const currentColor = data.colorMap.selectedIndex;
-      switch (data.currentTool) {
-        case 0:
-          const idx = y * data.size + x;
-          data.drawer.down('dot', y, x, data.dots[idx] === currentColor ? 0 : currentColor);
-          break;
-        case 1:
-          data.drawer.down('line', y, x, currentColor);
-          break;
-        case 2:
-          data.drawer.down('rect', y, x, currentColor);
-          break;
-        case 3:
-          data.drawer.down('oval', y, x, currentColor);
-          break;
-      }
+      // this.histories.push(this.dots.slice());
+      // const currentColor = data.colorMap.selectedIndex;
+      // switch (data.currentTool) {
+      //   case 0:
+      //     const idx = y * data.size + x;
+      //     data.drawer.down('dot', y, x, data.dots[idx] === currentColor ? 0 : currentColor);
+      //     break;
+      //   case 1:
+      //     data.drawer.down('line', y, x, currentColor);
+      //     break;
+      //   case 2:
+      //     data.drawer.down('rect', y, x, currentColor);
+      //     break;
+      //   case 3:
+      //     data.drawer.down('oval', y, x, currentColor);
+      //     break;
+      // }
     },
 
     move: function(y, x, pushed) {
       if (pushed) {
-        data.drawer.move(this.histories[0], y, x);
+        this.toolSet.currentTool.move(this.drawer, y, x);
+        // data.drawer.move(this.histories[0], y, x);
       }
       this.cursorX = x;
       this.cursorY = y;
