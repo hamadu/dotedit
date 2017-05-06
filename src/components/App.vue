@@ -123,7 +123,9 @@ export default {
     },
 
     loadFromFile: function(file) {
-      IO.loadFromFile(file, (dots) => {
+      const canvas = this.$refs.previewCanvas.$refs.previewCanvas;
+      IO.loadFromFile(file, canvas, (dots, colorSet) => {
+        this.colorMap.changeColorSet(colorSet);
         this.dots.splice(0, dots.length, ...dots);
       });
     },

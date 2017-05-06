@@ -1,21 +1,29 @@
 import Color from './color'
+import ColorSet from './colorSet'
 
 export default class ColorMap {
   constructor() {
     this.colorSets = ['default', 'gameboy', 'gray'];
-    this.colors = ColorMap.default();
+    this.colors = ColorSet.default();
     this.selectedIndex = 0;
   }
 
   changeColorSet(colorSet) {
-    let colors = ColorMap.default();
+    let colors = [];
     switch (colorSet) {
       case 'gameboy':
-        colors = ColorMap.gameboy();
+        colors = ColorSet.gameboy();
         break;
       case 'gray':
-        colors = ColorMap.gray();
+        colors = ColorSet.gray();
         break;
+
+      case 'default':
+        colors = ColorSet.default();
+        break;
+    }
+    if (colors.length == 0) {
+      colors = colorSet.colors;
     }
     this.colors = colors;
   }
@@ -34,17 +42,5 @@ export default class ColorMap {
 
   changeColor(idx, r, g, b) {
     this.colors.splice(idx, 1, Color.fromRGB(r, g, b));
-  }
-
-  static default() {
-    return ['#336699', '#000000', '#ff3333', '#33ff33', '#3333ff', '#888888', '#ffffff'].map(color => Color.fromHEX(color));
-  }
-
-  static gameboy() {
-    return ['#999999', '#0F380F', '#306230', '#8bac0f', '#9bbc0f', '#ffffff', '#ffffff'].map(color => Color.fromHEX(color));
-  }
-
-  static gray() {
-    return ['#336699', '#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff'].map(color => Color.fromHEX(color));
   }
 }
