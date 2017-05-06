@@ -74,8 +74,6 @@ import CursorInfo from './CursorInfo.vue'
 import WorkCanvas from './WorkCanvas.vue'
 import IOTool from './IOTool.vue'
 
-const colorMap = new ColorMap();
-
 const size = 64;
 const dots = [];
 for (let i = 0 ; i < size ; i++) {
@@ -84,26 +82,20 @@ for (let i = 0 ; i < size ; i++) {
   }
 }
 
-const offsetY = 0;
-const offsetX = 0;
-const magnify = 16;
-
 const drawer = new Drawer(size, dots);
-
-const histories = [];
 
 const data = {
   cursorX: 0,
   cursorY: 0,
-  offsetY,
-  offsetX,
+  offsetY: 0,
+  offsetX: 0,
   dots,
-  histories,
+  histories: [],
   size,
-  colorMap,
+  colorMap: new ColorMap(),
   toolSet: ToolSet.getInstance(),
   drawer,
-  magnify,
+  magnify: 16,
   push: false,
   currentColor: 1,
   currentTool: 0
@@ -157,6 +149,7 @@ export default {
       this.toolSet.currentTool.up(this.drawer, y, x);
     }
   },
+
   components: {
     ColorPalette, IOTool, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas, WorkCanvas, ScaleAdjuster, CursorInfo
   }
