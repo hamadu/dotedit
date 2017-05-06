@@ -4,68 +4,6 @@ export default class Drawer {
   constructor(size, dots) {
     this.size = size;
     this.dots = dots;
-    this.mode = 'none';
-    this.fx = this.fy = this.tx = this.ty = this.lastX = this.lastY = 0;
-  }
-
-  down(mode, y, x, color) {
-    this.mode = mode;
-    this.fy = y;
-    this.fx = x;
-    this.ty = y;
-    this.tx = x;
-    this.lastY = y;
-    this.lastX = x;
-    this.color = color;
-
-    switch (this.mode) {
-      case 'dot':
-        this.dot(y, x);
-        break;
-    }
-  }
-
-  move(oldDots, y, x) {
-    this.tx = x;
-    this.ty = y;
-
-    if (this.mode !== 'dot') {
-      if (this.lastY != y || this.lastX != x) {
-        this.dots.splice(0, oldDots.length, ...oldDots);
-      }
-    }
-
-    switch (this.mode) {
-      case 'dot':
-        this.line(this.lastY, this.lastX, y, x);
-        break;
-      case 'line':
-        this.line(this.fy, this.fx, y, x);
-        break;
-      case 'rect':
-        this.rect(this.fy, this.fx, y, x);
-        break;
-      case 'oval':
-        this.oval(this.fy, this.fx, y, x);
-        break;
-    }
-    this.lastY = y;
-    this.lastX = x;
-  }
-
-  up(y, x) {
-    switch (this.mode) {
-      case 'line':
-        this.line(this.fy, this.fx, y, x);
-        break;
-      case 'rect':
-        this.rect(this.fy, this.fx, y, x);
-        break;
-      case 'oval':
-        this.oval(this.fy, this.fx, y, x);
-        break;
-    }
-    this.mode = 'none';
   }
 
   dot(y, x, color) {

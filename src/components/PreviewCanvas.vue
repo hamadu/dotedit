@@ -86,6 +86,8 @@ export default {
           if (color >= 1) {
             ctx.fillStyle = this.colorMap.color(this.dots[y*this.width+x]);
             ctx.fillRect(x, y, 1, 1);
+          } else {
+            ctx.clearRect(x, y, 1, 1);
           }
         }
       }
