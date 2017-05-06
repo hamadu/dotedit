@@ -1,14 +1,36 @@
 export default class Color {
   constructor(r, g, b) {
-    this.r = r;
-    this.g = g;
-    this.b = b;
-    this.hex = Color.rgbToHEX(r, g, b);
+    this.r = Math.floor(r);
+    this.g = Math.floor(g);
+    this.b = Math.floor(b);
+    this.hex = Color.rgbToHEX(this.r, this.g, this.b);
   }
 
   static intToHex(color) {
     const hex = color.toString(16);
     return hex.length <= 1 ? ('0' + hex) : hex;
+  }
+
+  static fromHSV(h, s, v) {
+    const max = v;
+    const min = (max - (s / 255.0) * max);
+    const med = (60 - Math.abs(h % 120 - 60)) / 60.0 * (max - min) + min;
+
+    let r, g, b;
+    if (0 <= h && h < 60) {
+      r = max; g = med; b = min;
+    } else if (h < 120) {
+      r = med; g = max; b = min;
+    } else if (h < 180) {
+      r = min; g = max; b = med;
+    } else if (h < 240) {
+      r = min; g = med; b = max;
+    } else if (h < 300) {
+      r = med; g = min; b = max;
+    } else {
+      r = max; g = min; b = med;
+    }
+    return this.fromRGB(r, g, b);
   }
 
   static fromHEX(hex) {

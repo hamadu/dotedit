@@ -15,13 +15,16 @@
           background: color.hex
         }"
         v-on:click="selectColor(index)" />
+      <br v-if="index % 25 == 24" />
     </template>
 
     <br/>
 
-    R:<input type="range" min="0" max="255" ref="r" v-on:input="changeColor()" :value="colorMap.currentColor().r" /> {{colorMap.currentColor().r}}<br/>
-    G:<input type="range" min="0" max="255" ref="g" v-on:input="changeColor()" :value="colorMap.currentColor().g" /> {{colorMap.currentColor().g}}<br/>
-    B:<input type="range" min="0" max="255" ref="b" v-on:input="changeColor()" :value="colorMap.currentColor().b" /> {{colorMap.currentColor().b}}<br/>
+    <div>
+      R:<input type="range" min="0" max="255" ref="r" v-on:input="changeColor()" :value="colorMap.currentColor().r" /> {{colorMap.currentColor().r}}<br/>
+      G:<input type="range" min="0" max="255" ref="g" v-on:input="changeColor()" :value="colorMap.currentColor().g" /> {{colorMap.currentColor().g}}<br/>
+      B:<input type="range" min="0" max="255" ref="b" v-on:input="changeColor()" :value="colorMap.currentColor().b" /> {{colorMap.currentColor().b}}<br/>
+    </div>
   </div>
 </template>
 
@@ -58,8 +61,8 @@ input.color-component {
 button.palette {
   outline: none;
   border: 1px solid #000;
-  width: 64px;
-  height: 24px;
+  width: 32px;
+  height: 18px;
 }
 
 button.palette.selected {

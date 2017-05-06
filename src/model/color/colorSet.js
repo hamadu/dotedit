@@ -11,7 +11,24 @@ export default class ColorSet {
   }
 
   static default() {
-    const colors = ['#336699', '#000000', '#ff3333', '#33ff33', '#3333ff', '#888888', '#ffffff'].map(color => Color.fromHEX(color));
+    const colors = [Color.fromHEX('#336699')];
+    for (let pad = 0 ; pad < 24 ; pad++) {
+      colors.push(Color.fromRGB(0, 0, 0));
+    }
+
+    for (let hue = 0 ; hue < 360 ; hue += 30) {
+      for (let value = 255 ; value >= 51 ; value -= 51) {
+        for (let saturation = 255 ; saturation >= 51 ; saturation -= 51) {
+          colors.push(Color.fromHSV(hue, saturation, value));
+        }
+      }
+    }
+    for (let gray = 25 ; gray >= 1 ; gray--) {
+      colors.push(Color.fromRGB(gray * 10 + 5, gray * 10 + 5, gray * 10 + 5));
+    }
+
+
+
     return this.fromColors('default', colors);
   }
 
