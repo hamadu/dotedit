@@ -34,12 +34,6 @@ export default class IO {
         }
 
         callback(dots, ColorSet.fromColors(colors));
-
-        // var previewCanvas = Painter.Canvas.getPreviewCanvas();
-        // previewCanvas.clearRect();
-        // previewCanvas.loadImage(img);
-        // Painter.Canvas.setScale(8);
-        // Painter.Canvas.clip();
       }
       img.src = event.target.result;
     }
