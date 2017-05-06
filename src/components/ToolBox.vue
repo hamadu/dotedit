@@ -7,7 +7,6 @@
 </template>
 
 <script>
-// const tools = ['Pencil', 'Line', 'Rect', 'Oval', 'Bucket']
 export default {
   name: 'tool-box',
   props: ['toolSet'],

@@ -9,7 +9,7 @@
 
       <i-o-tool v-on:save="save" v-on:loadFromFile="loadFromFile" />
 
-      <tool-box :tool-set="toolSet" v-on:selectTool="selectTool" :current-tool="currentTool" />
+      <tool-box :tool-set="toolSet" :current-tool="currentTool" />
 
       <scale-adjuster :magnify="magnify" v-on:scaleUp="scaleUp" v-on:scaleDown="scaleDown" />
     </div>
@@ -144,9 +144,9 @@ export default {
       data.colorMap.changeColorSet(name);
     },
 
-    selectTool: (id) => {
-      data.currentTool = id;
-    },
+    // selectTool: (id) => {
+    //   data.currentTool = id;
+    // },
 
     scaleUp: function() {
       this.magnify = Math.min(32, this.magnify << 1);

@@ -1,4 +1,5 @@
 import Pencil from './pencil'
+import Line from './line'
 
 export default class ToolSet {
   constructor(tools) {
@@ -19,7 +20,8 @@ export default class ToolSet {
 
   static get defaultTools() {
     return [
-      new Pencil()
+      new Pencil(),
+      new Line()
     ]
   }
 }
