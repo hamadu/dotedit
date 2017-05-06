@@ -144,10 +144,6 @@ export default {
       data.colorMap.changeColorSet(name);
     },
 
-    // selectTool: (id) => {
-    //   data.currentTool = id;
-    // },
-
     scaleUp: function() {
       this.magnify = Math.min(32, this.magnify << 1);
     },

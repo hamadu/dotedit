@@ -1,5 +1,7 @@
 import Pencil from './pencil'
 import Line from './line'
+import Rect from './rect'
+import Oval from './oval'
 
 export default class ToolSet {
   constructor(tools) {
@@ -21,7 +23,9 @@ export default class ToolSet {
   static get defaultTools() {
     return [
       new Pencil(),
-      new Line()
+      new Line(),
+      new Rect(),
+      new Oval()
     ]
   }
 }
