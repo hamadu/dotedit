@@ -1,16 +1,20 @@
 <template>
   <div id="app" style="width: 100%;">
-    <color-palette
-      v-on:selectColor="selectColor"
-      v-on:changeColor="changeColor"
-      v-on:changeColorSet="changeColorSet"
-      :color-map="colorMap" />
+    <div id="header">
+      <color-palette
+        v-on:selectColor="selectColor"
+        v-on:changeColor="changeColor"
+        v-on:changeColorSet="changeColorSet"
+        :color-map="colorMap" />
 
-    <tool-box v-on:selectTool="selectTool" :current-tool="currentTool" />
+      <i-o-tool v-on:save="save" v-on:loadFromFile="loadFromFile" />
 
-    <scale-adjuster :magnify="magnify" v-on:scaleUp="scaleUp" v-on:scaleDown="scaleDown" />
+      <tool-box v-on:selectTool="selectTool" :current-tool="currentTool" />
 
-    <div id="main" style="display: flex;">
+      <scale-adjuster :magnify="magnify" v-on:scaleUp="scaleUp" v-on:scaleDown="scaleDown" />
+    </div>
+
+    <div id="main">
       <div class="dot"  style="position: relative; top: 32px;">
         <dot-canvas ref="dotCanvas"
           :dotsize="magnify"
@@ -61,6 +65,7 @@
 <script>
 import Drawer from './../drawer'
 import ColorMap from './../model/color/colorMap'
+import IO from './../io'
 
 import ColorPalette from './ColorPalette.vue'
 import ToolBox from './ToolBox.vue'
@@ -70,6 +75,7 @@ import CaptureCanvas from './CaptureCanvas.vue'
 import PreviewCanvas from './PreviewCanvas.vue'
 import CursorInfo from './CursorInfo.vue'
 import WorkCanvas from './WorkCanvas.vue'
+import IOTool from './IOTool.vue'
 
 const colorMap = new ColorMap();
 
@@ -112,6 +118,16 @@ export default {
   },
 
   methods: {
+    save: function() {
+      IO.saveToURL(this.$refs.previewCanvas.$refs.previewCanvas);
+    },
+
+    loadFromFile: function(file) {
+      IO.loadFromFile(file, (dots) => {
+        this.dots.splice(0, dots.length, ...dots);
+      });
+    },
+
     selectColor: function(id) {
       data.colorMap.selectColor(id);
     },
@@ -176,7 +192,7 @@ export default {
     }
   },
   components: {
-    ColorPalette, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas, WorkCanvas, ScaleAdjuster, CursorInfo
+    ColorPalette, IOTool, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas, WorkCanvas, ScaleAdjuster, CursorInfo
   }
 }
 </script>

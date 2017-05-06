@@ -82,8 +82,11 @@ export default {
       const ctx = this.$refs.previewCanvas.getContext('2d');
       for (var y = 0 ; y < this.height ; y++) {
         for (var x = 0 ; x < this.width ; x++) {
-          ctx.fillStyle = this.colorMap.color(this.dots[y*this.width+x]);
-          ctx.fillRect(x, y, 1, 1);
+          const color = this.dots[y*this.width+x];
+          if (color >= 1) {
+            ctx.fillStyle = this.colorMap.color(this.dots[y*this.width+x]);
+            ctx.fillRect(x, y, 1, 1);
+          }
         }
       }
     }
