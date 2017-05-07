@@ -2,6 +2,7 @@ import Pencil from './pencil'
 import Line from './line'
 import Rect from './rect'
 import Oval from './oval'
+import Bucket from './bucket'
 
 export default class ToolSet {
   constructor(tools) {
@@ -32,7 +33,8 @@ export default class ToolSet {
       new Pencil(),
       new Line(),
       new Rect(),
-      new Oval()
+      new Oval(),
+      new Bucket()
     ]
   }
 }
