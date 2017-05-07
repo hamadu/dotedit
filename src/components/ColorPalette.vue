@@ -1,34 +1,37 @@
 <template>
-  <div id="palette">
-    <select ref="colorSet" v-on:change="changeColorSet">
-      <template v-for="(colorSet, index) in colorMap.colorSets">
-        <option :value="index">{{colorSet.name}}</option>
+  <draggable title="Color Palette">
+    <div id="palette">
+      <select ref="colorSet" v-on:change="changeColorSet">
+        <template v-for="(colorSet, index) in colorMap.colorSets">
+          <option :value="index">{{colorSet.name}}</option>
+        </template>
+      </select>
+
+      <br/>
+
+      <template v-for="(color, index) in colorMap.colors()">
+        <button class="palette"
+          v-bind:class="{ selected: colorMap.selectedColorIndex == index }"
+          v-bind:style="{
+            background: color.hex
+          }"
+          v-on:click="selectColor(index)" />
       </template>
-    </select>
 
-    <br/>
+      <br/>
 
-    <template v-for="(color, index) in colorMap.colors()">
-      <button class="palette"
-        v-bind:class="{ selected: colorMap.selectedColorIndex == index }"
-        v-bind:style="{
-          background: color.hex
-        }"
-        v-on:click="selectColor(index)" />
-      <br v-if="index % 25 == 24" />
-    </template>
-
-    <br/>
-
-    <div>
-      R:<input type="range" min="0" max="255" ref="r" v-on:input="changeColor()" :value="colorMap.currentColor().r" /> {{colorMap.currentColor().r}}<br/>
-      G:<input type="range" min="0" max="255" ref="g" v-on:input="changeColor()" :value="colorMap.currentColor().g" /> {{colorMap.currentColor().g}}<br/>
-      B:<input type="range" min="0" max="255" ref="b" v-on:input="changeColor()" :value="colorMap.currentColor().b" /> {{colorMap.currentColor().b}}<br/>
+      <div>
+        R:<input type="range" min="0" max="255" ref="r" v-on:input="changeColor()" :value="colorMap.currentColor().r" /> {{colorMap.currentColor().r}}<br/>
+        G:<input type="range" min="0" max="255" ref="g" v-on:input="changeColor()" :value="colorMap.currentColor().g" /> {{colorMap.currentColor().g}}<br/>
+        B:<input type="range" min="0" max="255" ref="b" v-on:input="changeColor()" :value="colorMap.currentColor().b" /> {{colorMap.currentColor().b}}<br/>
+      </div>
     </div>
-  </div>
+  </draggable>
 </template>
 
 <script>
+import Draggable from './Draggable.vue'
+
 export default {
   name: 'color-palette',
   props: ['colorMap'],
@@ -48,12 +51,18 @@ export default {
       const b = parseInt(this.$refs.b.value) || 0;
       this.colorMap.changeColor(this.colorMap.selectedColorIndex, r, g, b);
     }
-  }
+  },
+  components: { Draggable }
 }
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+div#palette {
+  width: 600px;
+  z-index: 1;
+}
+
 input.color-component {
   width: 32px;
 }
@@ -61,8 +70,8 @@ input.color-component {
 button.palette {
   outline: none;
   border: 1px solid #000;
-  width: 32px;
-  height: 18px;
+  width: 24px;
+  height: 16px;
 }
 
 button.palette.selected {

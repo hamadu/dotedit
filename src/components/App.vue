@@ -1,13 +1,13 @@
 <template>
   <div id="app" style="width: 100%;">
     <div id="header">
-      <color-palette :color-map="colorMap" />
-
       <i-o-tool v-on:save="save" v-on:loadFromFile="loadFromFile" />
 
       <tool-box :tool-set="toolSet" :current-tool="currentTool" />
 
       <scale-adjuster :magnify="magnify" v-on:scaleUp="scaleUp" v-on:scaleDown="scaleDown" />
+
+      <color-palette :color-map="colorMap" />
     </div>
 
     <div id="main">
@@ -34,27 +34,25 @@
           v-on:up="up" />
       </div>
 
-      <div class="preview" style="position: relative; top: 32px; left: 640px;">
-        <preview-canvas ref="previewCanvas"
-          :width="size"
-          :height="size"
-          :offset-y="offsetY"
-          :offset-x="offsetX"
-          :window-size="512 / magnify"
-          :dots="dots"
-          :color-map="colorMap"
-          v-on:changeOffset="changeOffset"
-        />
-      </div>
+      <preview-canvas ref="previewCanvas"
+        :width="size"
+        :height="size"
+        :offset-y="offsetY"
+        :offset-x="offsetX"
+        :window-size="512 / magnify"
+        :dots="dots"
+        :color-map="colorMap"
+        v-on:changeOffset="changeOffset"
+      />
 
-      <div class="info" style="position: relative; top: 128px; left: 640px;">
+      <!-- <div class="info" style="position: relative; top: 128px; left: 640px;">
         <cursor-info
           :y="cursorY"
           :x="cursorX"
           :dots="dots"
           :color-map="colorMap"
         />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -164,6 +162,6 @@ export default {
 
 <style lang="scss">
 #app {
-
+  user-select: none;
 }
 </style>

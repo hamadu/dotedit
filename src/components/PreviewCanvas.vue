@@ -1,35 +1,38 @@
 <template>
-  <div class="preview-canvas">
-    <div
-      v-on:mousedown="down"
-      v-on:mousemove="move"
-      v-on:mouseup="up"
-      v-on:mouseleave="leave"
-      v-bind:style="{
-        zIndex: 1,
-        position: 'absolute',
-        left: offsetX + 'px',
-        top: offsetY + 'px',
-        width: windowSize + 'px',
-        height: windowSize + 'px',
-        border: '1px solid #f00'
-      }"
-    />
+  <draggable title="Preview">
+    <div class="preview-canvas">
+      <div
+        v-on:mousedown="down"
+        v-on:mousemove="move"
+        v-on:mouseup="up"
+        v-on:mouseleave="leave"
+        v-bind:style="{
+          zIndex: 1,
+          position: 'absolute',
+          left: offsetX + 'px',
+          top: offsetY + 'px',
+          width: windowSize + 'px',
+          height: windowSize + 'px',
+          border: '1px solid #f00'
+        }"
+      />
 
-    <canvas ref="previewCanvas"
-      :width="width"
-      :height="height"
-      v-bind:style="{
-        border: '1px dashed #000',
-        position: 'absolute'
-      }"
-    >
-    </canvas>
-
-  </div>
+      <canvas ref="previewCanvas"
+        :width="width"
+        :height="height"
+        v-bind:style="{
+          border: '1px dashed #000',
+          position: 'absolute'
+        }"
+      >
+      </canvas>
+    </div>
+  </draggable>
 </template>
 
 <script>
+import Draggable from './Draggable.vue'
+
 export default {
   name: 'preview-canvas',
   props: ['dots', 'colorMap', 'dotsize', 'width', 'height', 'offsetX', 'offsetY', 'windowSize'],
@@ -92,9 +95,15 @@ export default {
         }
       }
     }
-  }
+  },
+  components: { Draggable }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+div.preview-canvas {
+  z-index: 1;
+  background-color: #fff;
+  position: relative;
+}
 </style>
