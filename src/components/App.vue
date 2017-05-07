@@ -29,6 +29,7 @@
           :offset-y="offsetY"
           :offset-x="offsetX"
           v-on:down="down"
+          v-on:rightDown="rightDown"
           v-on:move="move"
           v-on:up="up" />
       </div>
@@ -135,6 +136,11 @@ export default {
 
     down: function(y, x) {
       this.toolSet.currentTool.down(this.drawer, y, x, this.colorMap.selectedColorIndex);
+    },
+
+    rightDown: function(y, x) {
+      const colorIndex = this.drawer.syringe(y, x);
+      this.colorMap.selectColor(colorIndex);
     },
 
     move: function(y, x, pushed) {

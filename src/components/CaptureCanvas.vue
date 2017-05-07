@@ -26,9 +26,14 @@ export default {
     },
 
     down: function(event) {
+      const buttonCode = event.button;
       const yx = this.mouseEventToPosition(event);
-      this.push = true;
-      this.$emit('down', yx[0], yx[1]);
+      if (buttonCode === 0) {
+        this.push = true;
+        this.$emit('down', yx[0], yx[1]);
+      } else if (buttonCode === 2) {
+        this.$emit('rightDown', yx[0], yx[1]);
+      }
     },
 
     move: function(event) {

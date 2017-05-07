@@ -6,8 +6,16 @@ export default class Drawer {
     this.dots = dots;
   }
 
+  indexInDot(y, x) {
+    return y * this.size + x;
+  }
+
+  syringe(y, x) {
+    return this.dots[this.indexInDot(y, x)];
+  }
+
   dot(y, x, color) {
-    const idx = y * this.size + x;
+    const idx = this.indexInDot(y, x);
     if (this.dots[idx] != color) {
       this.dots.splice(idx, 1, color);
     }
