@@ -10,14 +10,21 @@ export default class ToolSet {
   }
 
   selectTool(newTool) {
-    this.currentTool = newTool;
+    this.currentTool = newTool
+  }
+
+  selectToolByName(newToolName) {
+    const newTool = this.tools.filter(tool => tool.name === newToolName)[0]
+    if (newTool) {
+      this.selectTool(newTool)
+    }
   }
 
   static getInstance() {
     if (!ToolSet.box) {
       ToolSet.box = new ToolSet(ToolSet.defaultTools)
     }
-    return ToolSet.box;
+    return ToolSet.box
   }
 
   static get defaultTools() {
