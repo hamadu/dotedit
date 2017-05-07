@@ -1,5 +1,5 @@
 <template>
-  <draggable title="Color Palette">
+  <draggable title="Color Palette" x="540" y="200">
     <div id="palette">
       <select ref="colorSet" v-on:change="changeColorSet">
         <template v-for="(colorSet, index) in colorMap.colorSets">

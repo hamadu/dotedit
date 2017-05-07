@@ -1,5 +1,5 @@
 <template>
-  <draggable title="Preview">
+  <draggable title="Preview" x="540" y="80">
     <div class="preview-canvas">
       <div
         v-on:mousedown="down"

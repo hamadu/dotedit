@@ -14,9 +14,9 @@
 export default {
   name: 'draggable',
   props: ['x', 'y', 'title'],
-  data: () => {
+  data: function() {
     return {
-      position: [0, 0],
+      position: [this.y | 0, this.x | 0],
       offset: [0, 0],
       push: false
     }
