@@ -52,4 +52,28 @@ export default class Drawer {
       this.dots.splice(y * this.size + minX, row.length, ...row);
     }
   }
+
+  bucket(y, x, color) {
+    const DX = [0, 1, 0, -1];
+    const DY = [1, 0, -1, 0];
+
+    const fromColor = this.syringe(y, x);
+    const queue = [[y, x]];
+    let qhead = 0;
+    while (qhead < queue.length) {
+      const now = queue[qhead++];
+      for (let d = 0 ; d < 4 ; d++) {
+        const ty = now[0] + DY[d];
+        const tx = now[1] + DX[d];
+        if (ty < 0 || tx < 0 || ty >= this.size || tx >= this.size) {
+          continue;
+        }
+        if (this.syringe(ty, tx) != fromColor) {
+          continue;
+        }
+        this.dot(ty, tx, color);
+        queue.push([ty, tx]);
+      }
+    }
+  }
 }

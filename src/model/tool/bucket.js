@@ -5,13 +5,13 @@ export default class Bucket {
   }
 
   down(drawer, y, x, color) {
+    this.color = color;
   }
 
   move(drawer, y, x) {
   }
 
   up(drawer, y, x) {
-    // doit
-    // drawer.line(this.startY, this.startX, y, x, this.color);
+    drawer.bucket(y, x, this.color);
   }
 }
