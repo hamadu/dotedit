@@ -16,10 +16,17 @@ Electron.ipcRenderer.on('select-tool', (event, toolName) => {
   ToolSet.getInstance().selectToolByName(toolName)
 })
 
-Electron.ipcRenderer.on('scale', (event, upOrDown) => {
-  if (upOrDown === 'up') {
-    CanvasState.getInstance().scaleUp();
-  } else {
-    CanvasState.getInstance().scaleDown();
+Electron.ipcRenderer.on('canvas', (event, subMenu) => {
+  switch (subMenu) {
+    case 'scale-up':
+      CanvasState.getInstance().scaleUp();
+      break;
+    case 'scale-down':
+      CanvasState.getInstance().scaleDown();
+      break;
+    case 'pick-color':
+      // MURIKURI
+      App.methods.pickColor.bind(App.data())();
+      break;
   }
 })

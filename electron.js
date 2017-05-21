@@ -60,17 +60,22 @@ function createWindow () {
       ]
     },
     {
-      label: 'View',
+      label: 'Canvas',
       submenu: [
+        {
+          label: 'Pick Color',
+          accelerator: 'Q',
+          click() { win.webContents.send('canvas', 'pick-color') }
+        },
         {
           label: 'Scale up',
           accelerator: 'Z',
-          click() { win.webContents.send('scale', 'up') }
+          click() { win.webContents.send('canvas', 'scale-up') }
         },
         {
           label: 'Scale down',
           accelerator: 'X',
-          click() { win.webContents.send('scale', 'down') }
+          click() { win.webContents.send('canvas', 'scale-down') }
         },
         {role: 'reload'},
         {role: 'forcereload'},

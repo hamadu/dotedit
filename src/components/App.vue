@@ -126,6 +126,11 @@ export default {
       this.offsetX = x;
     },
 
+    pickColor: function() {
+      const colorIndex = this.drawer.syringe(this.cursorY, this.cursorX);
+      this.colorMap.selectColor(colorIndex);
+    },
+
     down: function(y, x) {
       this.toolSet.currentTool.down(this.drawer, y, x, this.colorMap.selectedColorIndex);
     },
