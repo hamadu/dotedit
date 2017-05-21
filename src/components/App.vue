@@ -121,14 +121,6 @@ export default {
       });
     },
 
-    // scaleUp: function() {
-    //   this.magnify = Math.min(32, this.magnify << 1);
-    // },
-    //
-    // scaleDown: function() {
-    //   this.magnify = Math.max(8, this.magnify >>> 1);
-    // },
-
     changeOffset: function(y, x) {
       this.offsetY = y;
       this.offsetX = x;

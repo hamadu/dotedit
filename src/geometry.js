@@ -68,7 +68,7 @@ export default class Geometry {
     }
     if (tx == fx) {
       for (let y = fy ; y <= ty ; y++) {
-        dots.push(y, fx);
+        dots.push([y, fx]);
       }
     } else {
       const a = (tx - fx) / 2;
