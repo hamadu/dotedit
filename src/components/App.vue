@@ -5,7 +5,7 @@
 
       <tool-box :tool-set="toolSet" :current-tool="currentTool" />
 
-      <scale-adjuster :magnify="magnify" v-on:scaleUp="scaleUp" v-on:scaleDown="scaleDown" />
+      <scale-adjuster :canvasState="canvasState" />
 
       <color-palette :color-map="colorMap" />
     </div>
@@ -13,9 +13,9 @@
     <div id="main">
       <div class="dot"  style="position: relative; top: 32px;">
         <dot-canvas ref="dotCanvas"
-          :dotsize="magnify"
-          :width="512 / magnify"
-          :height="512 / magnify"
+          :dotsize="canvasState.magnify"
+          :width="512 / canvasState.magnify"
+          :height="512 / canvasState.magnify"
           :offset-y="offsetY"
           :offset-x="offsetX"
           :dots="dots"
@@ -23,9 +23,9 @@
         />
 
         <capture-canvas
-          :dotsize="magnify"
-          :width="512 / magnify"
-          :height="512 / magnify"
+          :dotsize="canvasState.magnify"
+          :width="512 / canvasState.magnify"
+          :height="512 / canvasState.magnify"
           :offset-y="offsetY"
           :offset-x="offsetX"
           v-on:down="down"
@@ -61,6 +61,7 @@
 import Drawer from './../drawer'
 import ColorMap from './../model/color/colorMap'
 import ToolSet from './../model/tool/toolSet'
+import CanvasState from './../model/canvasState'
 import IO from './../io'
 
 import ColorPalette from './ColorPalette.vue'
@@ -91,6 +92,7 @@ const data = {
   dots,
   histories: [],
   size,
+  canvasState: CanvasState.getInstance(),
   colorMap: new ColorMap(),
   toolSet: ToolSet.getInstance(),
   drawer,
@@ -119,13 +121,13 @@ export default {
       });
     },
 
-    scaleUp: function() {
-      this.magnify = Math.min(32, this.magnify << 1);
-    },
-
-    scaleDown: function() {
-      this.magnify = Math.max(8, this.magnify >>> 1);
-    },
+    // scaleUp: function() {
+    //   this.magnify = Math.min(32, this.magnify << 1);
+    // },
+    //
+    // scaleDown: function() {
+    //   this.magnify = Math.max(8, this.magnify >>> 1);
+    // },
 
     changeOffset: function(y, x) {
       this.offsetY = y;

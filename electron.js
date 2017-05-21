@@ -62,15 +62,19 @@ function createWindow () {
     {
       label: 'View',
       submenu: [
+        {
+          label: 'Scale up',
+          accelerator: 'Z',
+          click() { win.webContents.send('scale', 'up') }
+        },
+        {
+          label: 'Scale down',
+          accelerator: 'X',
+          click() { win.webContents.send('scale', 'down') }
+        },
         {role: 'reload'},
         {role: 'forcereload'},
-        {role: 'toggledevtools'},
-        {type: 'separator'},
-        {role: 'resetzoom'},
-        {role: 'zoomin'},
-        {role: 'zoomout'},
-        {type: 'separator'},
-        {role: 'togglefullscreen'}
+        {role: 'toggledevtools'}
       ]
     },
     {

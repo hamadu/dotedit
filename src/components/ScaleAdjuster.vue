@@ -1,7 +1,7 @@
 <template>
   <div class="scale-adjuster">
     <button v-on:click="scaleDown()">-</button>
-    x{{magnify}}
+    x{{canvasState.magnify}}
     <button v-on:click="scaleUp()">+</button>
   </div>
 </template>
@@ -9,13 +9,13 @@
 <script>
 export default {
   name: 'scale-adjuster',
-  props: ['magnify'],
+  props: ['canvasState'],
   methods: {
     scaleUp: function() {
-      this.$emit('scaleUp');
+      this.canvasState.scaleUp();
     },
     scaleDown: function() {
-      this.$emit('scaleDown');
+      this.canvasState.scaleDown();
     }
   }
 }
