@@ -56,6 +56,11 @@ function createWindow () {
           label: 'Oval',
           accelerator: 'F',
           click() { win.webContents.send('select-tool', 'Oval') }
+        },
+        {
+          label: 'Bucket',
+          accelerator: 'G',
+          click() { win.webContents.send('select-tool', 'Bucket') }
         }
       ]
     },
