@@ -62,6 +62,7 @@ import Drawer from './../drawer'
 import ColorMap from './../model/color/colorMap'
 import ToolSet from './../model/tool/toolSet'
 import CanvasState from './../model/canvasState'
+import DotHistory from './../model/dotHistory'
 import IO from './../io'
 
 import ColorPalette from './ColorPalette.vue'
@@ -90,8 +91,8 @@ const data = {
   offsetY: 0,
   offsetX: 0,
   dots,
-  histories: [],
   size,
+  dotHistory: new DotHistory(dots),
   canvasState: CanvasState.getInstance(),
   colorMap: new ColorMap(),
   toolSet: ToolSet.getInstance(),
@@ -121,9 +122,19 @@ export default {
       });
     },
 
+    undo: function() {
+      const len = this.dots.length
+      this.dots.splice(0, len, ...this.dotHistory.prev())
+    },
+
+    redo: function() {
+      const len = this.dots.length
+      this.dots.splice(0, len, ...this.dotHistory.next())
+    },
+
     changeOffset: function(y, x) {
-      this.offsetY = y;
-      this.offsetX = x;
+      this.offsetY = y
+      this.offsetX = x
     },
 
     pickColor: function() {
@@ -150,6 +161,7 @@ export default {
 
     up: function(y, x) {
       this.toolSet.currentTool.up(this.drawer, y, x);
+      this.dotHistory.push(this.dots.slice(0));
     }
   },
 

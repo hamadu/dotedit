@@ -23,8 +23,16 @@ function createWindow () {
     {
       label: 'Edit',
       submenu: [
-        {role: 'undo'},
-        {role: 'redo'},
+        {
+          label: 'Undo',
+          accelerator: 'CommandOrControl+Z',
+          click() { win.webContents.send('edit', 'undo') }
+        },
+        {
+          label: 'Redo',
+          accelerator: 'Shift+CommandOrControl+Z',
+          click() { win.webContents.send('edit', 'redo') }
+        },
         {type: 'separator'},
         {role: 'cut'},
         {role: 'copy'},
