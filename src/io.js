@@ -19,21 +19,29 @@ export default class IO {
 
         const colorIDMap = {};
         const dots = [];
-        const colors = [Color.fromRGB(0, 51, 102)]
+        const colors = [Color.fromRGB(51, 102, 153)]
 
         for (let i = 0 ; i < size ; i++) {
           for (let j = 0 ; j < size ; j++) {
             const px = ctx.getImageData(j, i, 1, 1).data;
-            const color = Color.fromRGB(px[0], px[1], px[2]);
-            if (!colorIDMap[color.hex]) {
-              colorIDMap[color.hex] = colors.length;
-              colors.push(color);
+            if (px[3] == 0) {
+              dots.push(0);
+            } else {
+              const color = Color.fromRGB(px[0], px[1], px[2]);
+              if (!colorIDMap[color.hex]) {
+                colorIDMap[color.hex] = colors.length;
+                colors.push(color);
+              }
+              dots.push(colorIDMap[color.hex]);
             }
-            dots.push(colorIDMap[color.hex]);
           }
         }
 
-        callback(dots, ColorSet.fromColors(colors));
+        while (colors.length <= 255) {
+          colors.push(Color.fromRGB(0, 0, 0))
+        }
+
+        callback(dots, ColorSet.fromColors('file', colors))
       }
       img.src = event.target.result;
     }
