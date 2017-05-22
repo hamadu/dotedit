@@ -39,12 +39,12 @@ export default class Drawer {
     });
   }
 
-  fillRect(fy, fx, ty, tx) {
+  fillRect(fy, fx, ty, tx, color) {
     const row = [];
     const minX = Math.min(fx, tx);
     const maxX = Math.max(fx, tx);
     for (let x = minX ; x <= maxX ; x++) {
-      row.push(this.color);
+      row.push(color);
     }
     const minY = Math.min(fy, ty);
     const maxY = Math.max(fy, ty);

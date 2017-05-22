@@ -11,7 +11,11 @@ export default class ToolSet {
   }
 
   selectTool(newTool) {
-    this.currentTool = newTool
+    if (this.currentTool === newTool) {
+      this.currentTool.toggle()
+    } else {
+      this.currentTool = newTool
+    }
   }
 
   selectToolByName(newToolName) {
