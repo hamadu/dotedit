@@ -20,17 +20,14 @@
 
       <br/>
 
-      <div>
-        R:<input type="range" min="0" max="255" ref="r" v-on:input="changeColor()" :value="colorMap.currentColor().r" /> {{colorMap.currentColor().r}}<br/>
-        G:<input type="range" min="0" max="255" ref="g" v-on:input="changeColor()" :value="colorMap.currentColor().g" /> {{colorMap.currentColor().g}}<br/>
-        B:<input type="range" min="0" max="255" ref="b" v-on:input="changeColor()" :value="colorMap.currentColor().b" /> {{colorMap.currentColor().b}}<br/>
-      </div>
+      <ColorPicker :r="colorMap.currentColor().r" :g="colorMap.currentColor().g" :b="colorMap.currentColor().b" v-on:changeColor="applyColor" />
     </div>
   </draggable>
 </template>
 
 <script>
 import Draggable from './Draggable.vue'
+import ColorPicker from './ColorPicker.vue'
 
 export default {
   name: 'color-palette',
@@ -45,14 +42,17 @@ export default {
       this.colorMap.selectColor(id);
     },
 
+    applyColor: function(r, g, b) {
+      this.colorMap.changeColor(this.colorMap.selectedColorIndex, r, g, b);
+    },
+
     changeColor: function() {
       const r = parseInt(this.$refs.r.value) || 0;
       const g = parseInt(this.$refs.g.value) || 0;
       const b = parseInt(this.$refs.b.value) || 0;
-      this.colorMap.changeColor(this.colorMap.selectedColorIndex, r, g, b);
     }
   },
-  components: { Draggable }
+  components: { Draggable, ColorPicker }
 }
 
 </script>

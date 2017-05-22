@@ -23,7 +23,6 @@ Electron.ipcRenderer.on('edit', (event, subMenu) => {
   }
 })
 
-
 Electron.ipcRenderer.on('select-tool', (event, toolName) => {
   ToolSet.getInstance().selectToolByName(toolName)
 })
