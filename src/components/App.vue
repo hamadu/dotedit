@@ -3,7 +3,7 @@
     <div id="header">
       <i-o-tool v-on:save="save" v-on:loadFromFile="loadFromFile" />
 
-      <tool-box :tool-set="toolSet" :current-tool="currentTool" />
+      <tool-box :tool-set="toolSet" />
 
       <scale-adjuster :canvasState="canvasState" />
 
@@ -39,7 +39,7 @@
         :height="size"
         :offset-y="offsetY"
         :offset-x="offsetX"
-        :window-size="512 / magnify"
+        :window-size="512 / canvasState.magnify"
         :dots="dots"
         :color-map="colorMap"
         v-on:changeOffset="changeOffset"
@@ -72,7 +72,6 @@ import DotCanvas from './DotCanvas.vue'
 import CaptureCanvas from './CaptureCanvas.vue'
 import PreviewCanvas from './PreviewCanvas.vue'
 import CursorInfo from './CursorInfo.vue'
-import WorkCanvas from './WorkCanvas.vue'
 import IOTool from './IOTool.vue'
 
 const size = 64;
@@ -97,10 +96,7 @@ const data = {
   colorMap: new ColorMap(),
   toolSet: ToolSet.getInstance(),
   drawer,
-  magnify: 16,
-  push: false,
-  currentColor: 1,
-  currentTool: 0
+  push: false
 };
 
 export default {
@@ -166,7 +162,7 @@ export default {
   },
 
   components: {
-    ColorPalette, IOTool, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas, WorkCanvas, ScaleAdjuster, CursorInfo
+    ColorPalette, IOTool, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas, ScaleAdjuster, CursorInfo
   }
 }
 </script>
