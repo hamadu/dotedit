@@ -11,7 +11,6 @@ export default class IO {
     const size = 64;
     const reader = new FileReader();
     reader.onload = (event) => {
-      console.log("ev", event);
       const img = new Image();
       img.onload = () => {
         const ctx = canvas.getContext('2d');
