@@ -1,13 +1,18 @@
 import Geometry from './geometry'
 
 export default class Drawer {
-  constructor(size, dots) {
-    this.size = size;
-    this.dots = dots;
+  constructor(canvas) {
+    this.setCanvas(canvas);
+  }
+
+  setCanvas(canvas) {
+    this.width = canvas.width;
+    this.height = canvas.height;
+    this.dots = canvas.dots;
   }
 
   indexInDot(y, x) {
-    return y * this.size + x;
+    return y * this.width + x;
   }
 
   syringe(y, x) {
@@ -49,7 +54,7 @@ export default class Drawer {
     const minY = Math.min(fy, ty);
     const maxY = Math.max(fy, ty);
     for (let y = minY ; y <= maxY ; y++) {
-      this.dots.splice(y * this.size + minX, row.length, ...row);
+      this.dots.splice(y * this.width + minX, row.length, ...row);
     }
   }
 
@@ -65,7 +70,7 @@ export default class Drawer {
       for (let d = 0 ; d < 4 ; d++) {
         const ty = now[0] + DY[d];
         const tx = now[1] + DX[d];
-        if (ty < 0 || tx < 0 || ty >= this.size || tx >= this.size) {
+        if (ty < 0 || tx < 0 || ty >= this.width || tx >= this.width) {
           continue;
         }
         if (this.syringe(ty, tx) != fromColor) {

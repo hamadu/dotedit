@@ -1,5 +1,13 @@
 <template>
   <div id="canvas">
+
+    <div style="position: relative; top: 16px;">
+      <template v-for="(canvas, index) in canvasManager.canvases">
+        <button v-bind:class="{ selected: canvasManager.currentCanvas == canvas }" v-on:click="selectCanvas(canvas)">{{index}}</button>
+      </template>
+      <button v-on:click="addCanvas()">+</button>
+    </div>
+
     <div class="dot" style="position: relative; top: 32px;">
       <dot-canvas ref="dotCanvas"
         :dotsize="canvasState.magnify"
@@ -26,20 +34,14 @@
 </template>
 
 <script>
-import Drawer from './../drawer'
-import CanvasManager from './../model/canvas/canvasManager'
-
 import ScaleAdjuster from './ScaleAdjuster.vue'
 import DotCanvas from './DotCanvas.vue'
 import CaptureCanvas from './CaptureCanvas.vue'
 
-const drawer = new Drawer(64, CanvasManager.getInstance().currentDots());
-
 const data = {
   cursorX: 0,
   cursorY: 0,
-  drawer,
-  push: false,
+  push: false
 };
 
 export default {
@@ -49,6 +51,9 @@ export default {
     return data
   },
   computed: {
+    drawer: function() {
+      return this.canvasManager.drawer;
+    },
     dots: function() {
       return this.canvasManager.currentDots();
     },
@@ -63,6 +68,14 @@ export default {
     }
   },
   methods: {
+    addCanvas: function() {
+      this.canvasManager.setCanvas(this.canvasManager.addCanvas());
+    },
+
+    selectCanvas: function(canvas) {
+      this.canvasManager.setCanvas(canvas);
+    },
+
     pickColor: function() {
       const colorIndex = this.drawer.syringe(this.cursorY, this.cursorX);
       this.colorMap.selectColor(colorIndex);

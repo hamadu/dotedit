@@ -1,10 +1,23 @@
 import Canvas from './canvas'
+import Drawer from './../../drawer'
 
 export default class CanvasManager {
   constructor() {
     const initialCanvas = new Canvas(64, 64)
     this.canvases = [initialCanvas]
     this.currentCanvas = initialCanvas
+    this.drawer = new Drawer(initialCanvas)
+  }
+
+  setCanvas(canvas) {
+    this.currentCanvas = canvas
+    this.drawer.setCanvas(canvas)
+  }
+
+  addCanvas() {
+    const newCanvas = new Canvas(64, 64);
+    this.canvases.push(newCanvas);
+    return newCanvas;
   }
 
   currentDots() {
