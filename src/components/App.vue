@@ -124,10 +124,6 @@ export default {
 
     changeOffset: function(y, x) {
       this.canvasManager.changeOffset(y, x)
-    },
-
-    pickColor: function() {
-      //
     }
   },
 

@@ -7,10 +7,6 @@ export default class CanvasManager {
     this.currentCanvas = initialCanvas
   }
 
-  currentDrawer() {
-
-  }
-
   currentDots() {
     return this.currentCanvas.dots
   }

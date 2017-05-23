@@ -1,16 +1,13 @@
 import Vue from 'vue'
 import Electron from 'electron'
 import App from './components/App.vue'
-import MenuHandler from './menuHandler'
 import ToolSet from './model/tool/toolSet'
-import CanvasState from './model/canvasState'
+import CanvasManager from './model/canvas/canvasManager'
 
 new Vue({
   el: '#app',
   render: h => h(App)
 })
-
-const menuHandler = new MenuHandler(App)
 
 Electron.ipcRenderer.on('edit', (event, subMenu) => {
   switch (subMenu) {
@@ -30,10 +27,10 @@ Electron.ipcRenderer.on('select-tool', (event, toolName) => {
 Electron.ipcRenderer.on('canvas', (event, subMenu) => {
   switch (subMenu) {
     case 'scale-up':
-      CanvasState.getInstance().scaleUp()
+      CanvasManager.getInstance().currentState().scaleUp()
       break
     case 'scale-down':
-      CanvasState.getInstance().scaleDown()
+      CanvasManager.getInstance().currentState().scaleDown()
       break
     case 'pick-color':
       // MURIKURI
