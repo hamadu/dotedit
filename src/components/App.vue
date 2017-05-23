@@ -95,8 +95,7 @@ const data = {
   canvasState: CanvasState.getInstance(),
   colorMap: new ColorMap(),
   toolSet: ToolSet.getInstance(),
-  drawer,
-  push: false
+  drawer
 };
 
 export default {
