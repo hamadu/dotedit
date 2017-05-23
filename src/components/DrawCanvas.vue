@@ -6,10 +6,12 @@
         <button v-bind:class="{ selected: canvasManager.currentCanvas == canvas }" v-on:click="selectCanvas(canvas)">{{index}}</button>
       </template>
       <button v-on:click="addCanvas()">+</button>
+      <button v-on:click="changeCanvasSize()">...</button>
     </div>
 
     <div class="dot" style="position: relative; top: 32px;">
       <dot-canvas ref="dotCanvas"
+        :canvasWidth="canvasManager.currentCanvas.width"
         :dotsize="canvasState.magnify"
         :width="512 / canvasState.magnify"
         :height="512 / canvasState.magnify"
@@ -68,26 +70,30 @@ export default {
     }
   },
   methods: {
+    changeCanvasSize: function() {
+      this.canvasManager.setCanvasSize(48, 96)
+    },
+
     addCanvas: function() {
-      this.canvasManager.setCanvas(this.canvasManager.addCanvas());
+      this.canvasManager.setCanvas(this.canvasManager.addCanvas())
     },
 
     selectCanvas: function(canvas) {
-      this.canvasManager.setCanvas(canvas);
+      this.canvasManager.setCanvas(canvas)
     },
 
     pickColor: function() {
-      const colorIndex = this.drawer.syringe(this.cursorY, this.cursorX);
-      this.colorMap.selectColor(colorIndex);
+      const colorIndex = this.drawer.syringe(this.cursorY, this.cursorX)
+      this.colorMap.selectColor(colorIndex)
     },
 
     down: function(y, x) {
-      this.toolSet.currentTool.down(this.drawer, y, x, this.colorMap.selectedColorIndex);
+      this.toolSet.currentTool.down(this.drawer, y, x, this.colorMap.selectedColorIndex)
     },
 
     rightDown: function(y, x) {
-      const colorIndex = this.drawer.syringe(y, x);
-      this.colorMap.selectColor(colorIndex);
+      const colorIndex = this.drawer.syringe(y, x)
+      this.colorMap.selectColor(colorIndex)
     },
 
     move: function(y, x, pushed) {

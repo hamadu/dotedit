@@ -12,11 +12,4 @@ export default class CanvasState {
   scaleDown() {
     this.magnify = Math.max(8, this.magnify >>> 1);
   }
-
-  static getInstance() {
-    if (!CanvasState.state) {
-      CanvasState.state = new CanvasState()
-    }
-    return CanvasState.state
-  }
 }

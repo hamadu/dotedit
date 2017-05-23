@@ -13,32 +13,9 @@
     <div id="main">
       <draw-canvas :color-map="colorMap" :tool-set="toolSet" :canvas-manager="canvasManager" />
 
-      <!-- <div class="dot"  style="position: relative; top: 32px;">
-        <dot-canvas ref="dotCanvas"
-          :dotsize="canvasState.magnify"
-          :width="512 / canvasState.magnify"
-          :height="512 / canvasState.magnify"
-          :offset-y="offsetY"
-          :offset-x="offsetX"
-          :dots="dots"
-          :color-map="colorMap"
-        />
-
-        <capture-canvas
-          :dotsize="canvasState.magnify"
-          :width="512 / canvasState.magnify"
-          :height="512 / canvasState.magnify"
-          :offset-y="offsetY"
-          :offset-x="offsetX"
-          v-on:down="down"
-          v-on:rightDown="rightDown"
-          v-on:move="move"
-          v-on:up="up" />
-      </div> -->
-
       <preview-canvas ref="previewCanvas"
-        :width="size"
-        :height="size"
+        :width="width"
+        :height="height"
         :offset-y="offsetY"
         :offset-x="offsetX"
         :window-size="512 / canvasState.magnify"
@@ -73,11 +50,8 @@ import PreviewCanvas from './PreviewCanvas.vue'
 import CursorInfo from './CursorInfo.vue'
 import IOTool from './IOTool.vue'
 
-const size = 64;
-
 const data = {
   canvasManager: CanvasManager.getInstance(),
-  size,
   colorMap: new ColorMap(),
   toolSet: ToolSet.getInstance(),
 };
@@ -88,17 +62,23 @@ export default {
     return data
   },
   computed: {
+    width: function() {
+      return this.canvasManager.currentCanvas.width
+    },
+    height: function() {
+      return this.canvasManager.currentCanvas.height
+    },
     dots: function() {
-      return this.canvasManager.currentDots();
+      return this.canvasManager.currentDots()
     },
     canvasState: function() {
-      return this.canvasManager.currentState();
+      return this.canvasManager.currentState()
     },
     offsetX: function() {
-      return this.canvasManager.currentState().offsetX;
+      return this.canvasManager.currentState().offsetX
     },
     offsetY: function() {
-      return this.canvasManager.currentState().offsetY;
+      return this.canvasManager.currentState().offsetY
     }
   },
   methods: {

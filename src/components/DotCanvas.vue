@@ -25,7 +25,7 @@
 <script>
 export default {
   name: 'dot-canvas',
-  props: ['dots', 'colorMap', 'dotsize', 'width', 'height', 'offsetX', 'offsetY'],
+  props: ['dots', 'colorMap', 'dotsize', 'canvasWidth', 'width', 'height', 'offsetX', 'offsetY'],
   mounted: function() {
     this.drawGrid();
     this.update();
@@ -59,8 +59,8 @@ export default {
       ctx.fillRect(fx * this.dotsize, fy * this.dotsize, w * this.dotsize, h * this.dotsize);
     },
     update: function() {
-      const len = Math.sqrt(this.dots.length);
-      const ctx = this.$refs.dotCanvas.getContext('2d');
+      const len = this.canvasWidth
+      const ctx = this.$refs.dotCanvas.getContext('2d')
       for (var y = 0 ; y < this.height ; y++) {
         for (var x = 0 ; x < this.width ; x++) {
           const ay = y + this.offsetY;

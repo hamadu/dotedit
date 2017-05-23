@@ -14,6 +14,11 @@ export default class CanvasManager {
     this.drawer.setCanvas(canvas)
   }
 
+  setCanvasSize(newHeight, newWidth) {
+    this.currentCanvas.changeCanvasSize(newHeight, newWidth)
+    this.drawer.setCanvas(this.currentCanvas)
+  }
+
   addCanvas() {
     const newCanvas = new Canvas(64, 64);
     this.canvases.push(newCanvas);
