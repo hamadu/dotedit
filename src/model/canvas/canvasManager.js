@@ -12,15 +12,15 @@ export default class CanvasManager {
   }
 
   currentDots() {
-    return this.currentCanvas.dots;
+    return this.currentCanvas.dots
   }
 
   currentState() {
-    return this.currentCanvas.state;
+    return this.currentCanvas.state
   }
 
   currentHistory() {
-    return this.currentCanvas.history;
+    return this.currentCanvas.history
   }
 
   undo() {
@@ -31,6 +31,16 @@ export default class CanvasManager {
   redo() {
     const len = this.currentDots().length
     this.currentDots().splice(0, len, ...this.currentHistory().next())
+  }
+
+  changeOffset(y, x) {
+    const state = this.currentState()
+    state.offsetY = y
+    state.offsetX = x
+  }
+
+  pushToHistory(dots) {
+    this.currentHistory().push(dots)
   }
 
   static getInstance() {

@@ -11,7 +11,9 @@
     </div>
 
     <div id="main">
-      <div class="dot"  style="position: relative; top: 32px;">
+      <draw-canvas :color-map="colorMap" :tool-set="toolSet" :canvas-manager="canvasManager" />
+
+      <!-- <div class="dot"  style="position: relative; top: 32px;">
         <dot-canvas ref="dotCanvas"
           :dotsize="canvasState.magnify"
           :width="512 / canvasState.magnify"
@@ -32,7 +34,7 @@
           v-on:rightDown="rightDown"
           v-on:move="move"
           v-on:up="up" />
-      </div>
+      </div> -->
 
       <preview-canvas ref="previewCanvas"
         :width="size"
@@ -58,44 +60,26 @@
 </template>
 
 <script>
-import Drawer from './../drawer'
+import CanvasManager from './../model/canvas/canvasManager'
 import ColorMap from './../model/color/colorMap'
 import ToolSet from './../model/tool/toolSet'
-import CanvasState from './../model/canvasState'
-import DotHistory from './../model/dotHistory'
 import IO from './../io'
 
 import ColorPalette from './ColorPalette.vue'
 import ToolBox from './ToolBox.vue'
 import ScaleAdjuster from './ScaleAdjuster.vue'
-import DotCanvas from './DotCanvas.vue'
-import CaptureCanvas from './CaptureCanvas.vue'
+import DrawCanvas from './DrawCanvas.vue'
 import PreviewCanvas from './PreviewCanvas.vue'
 import CursorInfo from './CursorInfo.vue'
 import IOTool from './IOTool.vue'
 
 const size = 64;
-const dots = [];
-for (let i = 0 ; i < size ; i++) {
-  for (let j = 0 ; j < size ; j++) {
-    dots.push(0);
-  }
-}
-
-const drawer = new Drawer(size, dots);
 
 const data = {
-  cursorX: 0,
-  cursorY: 0,
-  offsetY: 0,
-  offsetX: 0,
-  dots,
+  canvasManager: CanvasManager.getInstance(),
   size,
-  dotHistory: new DotHistory(dots),
-  canvasState: CanvasState.getInstance(),
   colorMap: new ColorMap(),
   toolSet: ToolSet.getInstance(),
-  drawer
 };
 
 export default {
@@ -103,7 +87,20 @@ export default {
   data: () => {
     return data
   },
-
+  computed: {
+    dots: function() {
+      return this.canvasManager.currentDots();
+    },
+    canvasState: function() {
+      return this.canvasManager.currentState();
+    },
+    offsetX: function() {
+      return this.canvasManager.currentState().offsetX;
+    },
+    offsetY: function() {
+      return this.canvasManager.currentState().offsetY;
+    }
+  },
   methods: {
     save: function() {
       IO.saveToURL(this.$refs.previewCanvas.$refs.previewCanvas);
@@ -118,50 +115,24 @@ export default {
     },
 
     undo: function() {
-      const len = this.dots.length
-      this.dots.splice(0, len, ...this.dotHistory.prev())
+      this.canvasManager.undo()
     },
 
     redo: function() {
-      const len = this.dots.length
-      this.dots.splice(0, len, ...this.dotHistory.next())
+      this.canvasManager.redo()
     },
 
     changeOffset: function(y, x) {
-      this.offsetY = y
-      this.offsetX = x
+      this.canvasManager.changeOffset(y, x)
     },
 
     pickColor: function() {
-      const colorIndex = this.drawer.syringe(this.cursorY, this.cursorX);
-      this.colorMap.selectColor(colorIndex);
-    },
-
-    down: function(y, x) {
-      this.toolSet.currentTool.down(this.drawer, y, x, this.colorMap.selectedColorIndex);
-    },
-
-    rightDown: function(y, x) {
-      const colorIndex = this.drawer.syringe(y, x);
-      this.colorMap.selectColor(colorIndex);
-    },
-
-    move: function(y, x, pushed) {
-      if (pushed) {
-        this.toolSet.currentTool.move(this.drawer, y, x);
-      }
-      this.cursorX = x;
-      this.cursorY = y;
-    },
-
-    up: function(y, x) {
-      this.toolSet.currentTool.up(this.drawer, y, x);
-      this.dotHistory.push(this.dots.slice(0));
+      //
     }
   },
 
   components: {
-    ColorPalette, IOTool, ToolBox, DotCanvas, CaptureCanvas, PreviewCanvas, ScaleAdjuster, CursorInfo
+    ColorPalette, IOTool, ToolBox, DrawCanvas, PreviewCanvas, ScaleAdjuster, CursorInfo
   }
 }
 </script>

@@ -33,23 +33,25 @@ import ScaleAdjuster from './ScaleAdjuster.vue'
 import DotCanvas from './DotCanvas.vue'
 import CaptureCanvas from './CaptureCanvas.vue'
 
-const drawer = new Drawer(size, dots);
+const drawer = new Drawer(64, CanvasManager.getInstance().currentDots());
 
 const data = {
   cursorX: 0,
   cursorY: 0,
-  canvasManager: CanvasManager.getInstance(),
   drawer,
   push: false,
 };
 
 export default {
-  name: 'canvas',
-  props: ['colorMap', 'toolSet'],
+  name: 'draw-canvas',
+  props: ['canvasManager', 'colorMap', 'toolSet'],
   data: () => {
     return data
   },
   computed: {
+    dots: function() {
+      return this.canvasManager.currentDots();
+    },
     canvasState: function() {
       return this.canvasManager.currentState();
     },
@@ -61,33 +63,6 @@ export default {
     }
   },
   methods: {
-    save: function() {
-      IO.saveToURL(this.$refs.previewCanvas.$refs.previewCanvas);
-    },
-
-    loadFromFile: function(file) {
-      const canvas = this.$refs.previewCanvas.$refs.previewCanvas;
-      IO.loadFromFile(file, canvas, (dots, colorSet) => {
-        this.colorMap.addColorSet(colorSet);
-        this.dots.splice(0, dots.length, ...dots);
-      });
-    },
-
-    undo: function() {
-      const len = this.dots.length
-      this.dots.splice(0, len, ...this.dotHistory.prev())
-    },
-
-    redo: function() {
-      const len = this.dots.length
-      this.dots.splice(0, len, ...this.dotHistory.next())
-    },
-
-    changeOffset: function(y, x) {
-      this.offsetY = y
-      this.offsetX = x
-    },
-
     pickColor: function() {
       const colorIndex = this.drawer.syringe(this.cursorY, this.cursorX);
       this.colorMap.selectColor(colorIndex);
@@ -104,15 +79,15 @@ export default {
 
     move: function(y, x, pushed) {
       if (pushed) {
-        this.toolSet.currentTool.move(this.drawer, y, x);
+        this.toolSet.currentTool.move(this.drawer, y, x)
       }
-      this.cursorX = x;
-      this.cursorY = y;
+      this.cursorX = x
+      this.cursorY = y
     },
 
     up: function(y, x) {
-      this.toolSet.currentTool.up(this.drawer, y, x);
-      this.dotHistory.push(this.dots.slice(0));
+      this.toolSet.currentTool.up(this.drawer, y, x)
+      this.canvasManager.pushToHistory(this.dots.slice(0))
     }
   },
 

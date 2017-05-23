@@ -6,10 +6,10 @@ export default class Canvas {
     this.dots = [];
     for (let i = 0 ; i < height ; i++) {
       for (let j = 0 ; j < width ; j++) {
-        dots.push(0);
+        this.dots.push(0);
       }
     }
-    this.history = new DotHistory(dots);
+    this.history = new DotHistory(this.dots);
     this.state = new CanvasState();
   }
 }
