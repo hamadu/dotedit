@@ -1,34 +1,68 @@
 <template>
   <div id="picker">
-    <div>
-      R:
-      <input type="range" min="0" max="255" ref="r1" v-on:input="changeColorRange()" :value="r" />
-      <button v-on:click="addR(-16)">-16</button>
-      <button v-on:click="addR(16)">+16</button>
-      <input type="number" min="0" max="255" ref="r2" v-on:input="changeColorNumber()" :value="r" />
-      <br/>
+    <div class="container">
+      <div class="columns">
+        <div class="col-6">
+          <div class="container">
+            <div class="columns">
+              <div class="col-6">
+                R:
+                <input type="range" min="0" max="255" ref="r1" v-on:input="changeColorRange()" :value="r" />
+              </div>
+              <div class="col-6">
+                <div class="input-group">
+                  <input class="form-input input-sm" type="number" min="0" max="255" ref="r2" v-on:input="changeColorNumber()" :value="r" />
+                  <button class="btn btn-sm" v-on:click="addR(-15)">-15</button>
+                  <button class="btn btn-sm" v-on:click="addR(15)">+15</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      G:
-      <input type="range" min="0" max="255" ref="g1" v-on:input="changeColorRange()" :value="g" />
-      <button v-on:click="addG(-16)">-16</button>
-      <button v-on:click="addG(16)">+16</button>
-      <input type="number" min="0" max="255" ref="g2" v-on:input="changeColorNumber()" :value="g" />
-      <br/>
+          <div class="container">
+            <div class="columns">
+              <div class="col-6">
+                G:
+                <input type="range" min="0" max="255" ref="g1" v-on:input="changeColorRange()" :value="g" />
+              </div>
+              <div class="col-6">
+                <div class="input-group">
+                  <input class="form-input input-sm" type="number" min="0" max="255" ref="g2" v-on:input="changeColorNumber()" :value="g" />
+                  <button class="btn btn-sm" v-on:click="addG(-15)">-15</button>
+                  <button class="btn btn-sm" v-on:click="addG(15)">+15</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      B:
-      <input type="range" min="0" max="255" ref="b1" v-on:input="changeColorRange()" :value="b" />
-      <button v-on:click="addB(-16)">-16</button>
-      <button v-on:click="addB(16)">+16</button>
-      <input type="number" min="0" max="255" ref="b2" v-on:input="changeColorNumber()" :value="b" />
-      <br/>
-    </div>
-    <div
-      v-bind:style="{
-        border: '2px solid #000',
-        width: '32px',
-        height: '32px',
-        background: `rgb(${r}, ${g}, ${b})`
-      }">
+          <div class="container">
+            <div class="columns">
+              <div class="col-6">
+                B:
+                <input type="range" min="0" max="255" ref="b1" v-on:input="changeColorRange()" :value="b" />
+              </div>
+              <div class="col-6">
+                <div class="input-group">
+                  <input class="form-input input-sm" type="number" min="0" max="255" ref="b2" v-on:input="changeColorNumber()" :value="b" />
+                  <button class="btn btn-sm" v-on:click="addB(-15)">-15</button>
+                  <button class="btn btn-sm" v-on:click="addB(15)">+15</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-1">
+          <div
+            v-bind:style="{
+              marginLeft: '16px',
+              border: '2px solid #000',
+              width: '48px',
+              height: '48px',
+              background: `rgb(${r}, ${g}, ${b})`
+            }">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

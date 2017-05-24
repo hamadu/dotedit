@@ -1,6 +1,6 @@
 <template>
   <draggable title="Color Palette" x="540" y="200">
-    <div id="palette">
+    <div id="palette" class="container">
       <select ref="colorSet" v-on:change="changeColorSet">
         <template v-for="(colorSet, index) in colorMap.colorSets">
           <option :value="index">{{colorSet.name}}</option>
@@ -9,18 +9,20 @@
 
       <br/>
 
-      <template v-for="(color, index) in colorMap.colors()">
-        <button class="palette"
-          v-bind:class="{ selected: colorMap.selectedColorIndex == index }"
-          v-bind:style="{
-            background: color.hex
-          }"
-          v-on:click="selectColor(index)" />
-      </template>
+      <div>
+        <template v-for="(color, index) in colorMap.colors()">
+          <button class="palette"
+            v-bind:class="{ selected: colorMap.selectedColorIndex == index }"
+            v-bind:style="{
+              background: color.hex
+            }"
+            v-on:click="selectColor(index)" />
+        </template>
+      </div>
 
-      <br/>
-
-      <ColorPicker :r="colorMap.currentColor().r" :g="colorMap.currentColor().g" :b="colorMap.currentColor().b" v-on:changeColor="applyColor" />
+      <div>
+        <ColorPicker :r="colorMap.currentColor().r" :g="colorMap.currentColor().g" :b="colorMap.currentColor().b" v-on:changeColor="applyColor" />
+      </div>
     </div>
   </draggable>
 </template>
@@ -59,7 +61,7 @@ export default {
 
 <style lang="scss" scoped>
 div#palette {
-  width: 600px;
+  width: 640px;
   z-index: 1;
 }
 

@@ -23,7 +23,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'canvas-size-dialog',
   props: ['width', 'height'],
