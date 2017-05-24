@@ -1,3 +1,5 @@
+import style from 'spectre.css/dist/spectre.min.css'
+
 import Vue from 'vue'
 import Electron from 'electron'
 import App from './components/App.vue'

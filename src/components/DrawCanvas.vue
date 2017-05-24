@@ -1,9 +1,16 @@
 <template>
   <div id="canvas">
+    <div v-if="displayingPrompt">
+      <canvas-size-dialog
+        :width="currentCanvas.width"
+        :height="currentCanvas.height"
+        v-on:ok="onOK"
+        v-on:cancel="onCancel" />
+    </div>
 
     <div style="position: relative; top: 16px;">
       <template v-for="(canvas, index) in canvasManager.canvases">
-        <button v-bind:class="{ selected: canvasManager.currentCanvas == canvas }" v-on:click="selectCanvas(canvas)">{{index}}</button>
+        <button v-bind:class="{ selected: currentCanvas == canvas }" v-on:click="selectCanvas(canvas)">{{index}}</button>
       </template>
       <button v-on:click="addCanvas()">+</button>
       <button v-on:click="changeCanvasSize()">...</button>
@@ -11,7 +18,7 @@
 
     <div class="dot" style="position: relative; top: 32px;">
       <dot-canvas ref="dotCanvas"
-        :canvasWidth="canvasManager.currentCanvas.width"
+        :canvasWidth="currentCanvas.width"
         :dotsize="canvasState.magnify"
         :width="512 / canvasState.magnify"
         :height="512 / canvasState.magnify"
@@ -40,10 +47,13 @@ import ScaleAdjuster from './ScaleAdjuster.vue'
 import DotCanvas from './DotCanvas.vue'
 import CaptureCanvas from './CaptureCanvas.vue'
 
+import CanvasSizeDialog from './CanvasSizeDialog.vue'
+
 const data = {
   cursorX: 0,
   cursorY: 0,
-  push: false
+  push: false,
+  displayingPrompt: false
 };
 
 export default {
@@ -53,6 +63,9 @@ export default {
     return data
   },
   computed: {
+    currentCanvas: function() {
+      return this.canvasManager.currentCanvas;
+    },
     drawer: function() {
       return this.canvasManager.drawer;
     },
@@ -71,7 +84,16 @@ export default {
   },
   methods: {
     changeCanvasSize: function() {
-      this.canvasManager.setCanvasSize(48, 96)
+      this.displayingPrompt = true
+    },
+
+    onOK: function(newHeight, newWidth) {
+      this.displayingPrompt = false
+      this.canvasManager.setCanvasSize(newHeight, newWidth)
+    },
+
+    onCancel: function() {
+      this.displayingPrompt = false
     },
 
     addCanvas: function() {
@@ -88,6 +110,7 @@ export default {
     },
 
     down: function(y, x) {
+      console.log(this.drawer)
       this.toolSet.currentTool.down(this.drawer, y, x, this.colorMap.selectedColorIndex)
     },
 
@@ -111,7 +134,7 @@ export default {
   },
 
   components: {
-    DotCanvas, CaptureCanvas, ScaleAdjuster
+    DotCanvas, CaptureCanvas, ScaleAdjuster, CanvasSizeDialog
   }
 }
 </script>

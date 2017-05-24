@@ -11,7 +11,10 @@
     </div>
 
     <div id="main">
-      <draw-canvas :color-map="colorMap" :tool-set="toolSet" :canvas-manager="canvasManager" />
+      <draw-canvas
+        :color-map="colorMap"
+        :tool-set="toolSet"
+        :canvas-manager="canvasManager" />
 
       <preview-canvas ref="previewCanvas"
         :width="width"
@@ -50,10 +53,11 @@ import PreviewCanvas from './PreviewCanvas.vue'
 import CursorInfo from './CursorInfo.vue'
 import IOTool from './IOTool.vue'
 
+
 const data = {
   canvasManager: CanvasManager.getInstance(),
   colorMap: new ColorMap(),
-  toolSet: ToolSet.getInstance(),
+  toolSet: ToolSet.getInstance()
 };
 
 export default {
