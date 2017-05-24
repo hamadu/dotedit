@@ -1,7 +1,7 @@
 <template>
   <draggable title="Color Palette" x="540" y="200">
     <div id="palette" class="container">
-      <select ref="colorSet" v-on:change="changeColorSet">
+      <select class="form-input" ref="colorSet" v-on:change="changeColorSet">
         <template v-for="(colorSet, index) in colorMap.colorSets">
           <option :value="index">{{colorSet.name}}</option>
         </template>
@@ -61,8 +61,9 @@ export default {
 
 <style lang="scss" scoped>
 div#palette {
-  width: 640px;
+  width: 620px;
   z-index: 1;
+  padding: 8px;
 }
 
 input.color-component {

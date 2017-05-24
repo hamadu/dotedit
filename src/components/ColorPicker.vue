@@ -2,7 +2,7 @@
   <div id="picker">
     <div class="container">
       <div class="columns">
-        <div class="col-6">
+        <div class="col-7">
           <div class="container">
             <div class="columns">
               <div class="col-6">
@@ -123,9 +123,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div#palette {
-  width: 600px;
-  z-index: 1;
+div#picker {
+  margin-top: 8px;
 }
 
 input.color-component {

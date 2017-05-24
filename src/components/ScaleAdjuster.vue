@@ -1,8 +1,8 @@
 <template>
-  <div class="scale-adjuster">
-    <button v-on:click="scaleDown()">-</button>
+  <div id="scale-adjuster" class="container">
+    <button class="btn btn-sm" v-on:click="scaleDown()">-</button>
     x{{canvasState.magnify}}
-    <button v-on:click="scaleUp()">+</button>
+    <button class="btn btn-sm" v-on:click="scaleUp()">+</button>
   </div>
 </template>
 

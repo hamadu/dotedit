@@ -1,6 +1,6 @@
 <template>
-  <div id="io">
-    <button v-on:click="onSaveButtonClick">Save</button>
+  <div id="io" class="container">
+    <button class="btn" v-on:click="onSaveButtonClick">Save</button>
     <input type="file" value="Load" v-on:change="onLoadButtonClick"></input>
   </div>
 </template>
@@ -21,3 +21,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+#io {
+  padding: 8px;
+}
+</style>

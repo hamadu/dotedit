@@ -1,5 +1,5 @@
 <template>
-  <div id="canvas">
+  <div id="canvas" class="container">
     <div v-if="displayingPrompt">
       <canvas-size-dialog
         :width="currentCanvas.width"
@@ -9,11 +9,13 @@
     </div>
 
     <div style="position: relative; top: 16px;">
-      <template v-for="(canvas, index) in canvasManager.canvases">
-        <button v-bind:class="{ selected: currentCanvas == canvas }" v-on:click="selectCanvas(canvas)">{{index}}</button>
-      </template>
-      <button v-on:click="addCanvas()">+</button>
-      <button v-on:click="changeCanvasSize()">...</button>
+      <div class="btn-group">
+        <template v-for="(canvas, index) in canvasManager.canvases">
+          <button class="btn btn-sm" v-bind:class="{ active: currentCanvas == canvas }" v-on:click="selectCanvas(canvas)">{{index}}</button>
+        </template>
+      </div>
+      <button class="btn btn-sm" v-on:click="addCanvas()">+</button>
+      <button class="btn btn-sm" v-on:click="changeCanvasSize()">...</button>
     </div>
 
     <div class="dot" style="position: relative; top: 32px;">
