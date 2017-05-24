@@ -1,6 +1,11 @@
 <template>
-  <draggable title="Preview" x="540" y="80">
-    <div class="preview-canvas">
+  <draggable title="Preview" x="540" y="16">
+    <div id="preview-canvas"
+        v-bind:style="{
+          width:  (windowSize + 32) + 'px',
+          height: (windowSize + 32) + 'px',
+        }"
+      >
       <div
         v-on:mousedown="down"
         v-on:mousemove="move"
@@ -101,7 +106,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div.preview-canvas {
+div#preview-canvas {
   z-index: 1;
   background-color: #fff;
   position: relative;

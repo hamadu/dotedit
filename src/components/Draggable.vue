@@ -1,12 +1,16 @@
 <template>
-  <div class="draggable"
+  <div class="card"
     v-bind:style="{
       position: 'absolute',
       left: position[1] + 'px',
       top: position[0] + 'px'
     }">
-    <div class="draggable-area" v-on:mousedown="down" v-on:mousemove="move" v-on:mouseup="up">{{title}}</div>
+    <div class="card-header draggable-area" v-on:mousedown="down" v-on:mousemove="move" v-on:mouseup="up">
+      <h6 class="card-title">{{title}}</h6>
+    </div>
+    <div class="card-body">
     <slot>nya-</slot>
+    </div>
   </div>
 </template>
 
@@ -51,14 +55,11 @@ export default {
 
 <style lang="scss" scoped>
 div.draggable {
-  border: 2px solid #000;
-  background-color: #fff;
 }
 
 div.draggable-area {
   cursor: move;
-  border-bottom: 2px solid #000;
-  background-color: #ccc;
-  height: 32px;
+  background-color: #ddd;
+  padding: 5px;
 }
 </style>
