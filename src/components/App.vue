@@ -106,6 +106,10 @@ export default {
       this.canvasManager.redo()
     },
 
+    deleteSelection: function() {
+      this.canvasManager.deleteSelection()
+    },
+
     selectAll: function() {
       this.canvasManager.selectAll()
     },

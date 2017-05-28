@@ -55,6 +55,10 @@ export default class CanvasManager {
     this.drawer.selectAll()
   }
 
+  deleteSelection() {
+    this.drawer.deleteSelection()
+  }
+
   changeOffset(y, x) {
     const state = this.currentState()
     state.offsetY = y

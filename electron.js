@@ -38,7 +38,11 @@ function createWindow () {
         {role: 'copy'},
         {role: 'paste'},
         {role: 'pasteandmatchstyle'},
-        {role: 'delete'},
+        {
+          label: 'Delete',
+          accelerator: 'Delete',
+          click() { win.webContents.send('edit', 'delete') }
+        },
         {
           label: 'Select All',
           accelerator: 'CommandOrControl+A',

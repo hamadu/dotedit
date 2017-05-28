@@ -21,6 +21,18 @@ export default class Drawer {
     this.selectDots.splice(0, this.selectDots.length, ...this.falseDots)
   }
 
+  deleteSelection() {
+    for (let y = 0 ; y < this.height ; y++) {
+      for (let x = 0 ; x < this.width ; x++) {
+        const idx = y * this.width + x
+        if (this.selectDots[idx]) {
+          this.dot(y, x, 0)
+        }
+      }
+    }
+    this.clearSelection()
+  }
+
   selectAll() {
     this.select(0, 0, this.height, this.width)
   }
