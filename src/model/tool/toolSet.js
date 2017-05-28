@@ -1,3 +1,4 @@
+import Selector from './selector'
 import Pencil from './pencil'
 import Line from './line'
 import Rect from './rect'
@@ -34,6 +35,7 @@ export default class ToolSet {
 
   static get defaultTools() {
     return [
+      new Selector(),
       new Pencil(),
       new Line(),
       new Rect(),

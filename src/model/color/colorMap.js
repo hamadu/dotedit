@@ -25,6 +25,10 @@ export default class ColorMap {
     return this.currentColorSet.colors[idx].hex;
   }
 
+  inverseColor(idx) {
+    return this.currentColorSet.colors[idx].inverse().hex;
+  }
+
   currentColor() {
     return this.currentColorSet.colors[this.selectedColorIndex];
   }

@@ -15,14 +15,14 @@ export default class Line {
 
   move(drawer, y, x) {
     if (this.lastY != y || this.lastX != x) {
-      drawer.dots.splice(0, this.oldDots.length, ...this.oldDots);
+      drawer.dots.splice(0, this.oldDots.length, ...this.oldDots)
     }
-    this.lastY = y;
-    this.lastX = x;
-    drawer.line(this.startY, this.startX, y, x, this.color);
+    this.lastY = y
+    this.lastX = x
+    drawer.line(this.startY, this.startX, y, x, this.color)
   }
 
   up(drawer, y, x) {
-    drawer.line(this.startY, this.startX, y, x, this.color);
+    drawer.line(this.startY, this.startX, y, x, this.color)
   }
 }

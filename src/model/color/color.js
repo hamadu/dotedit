@@ -6,6 +6,10 @@ export default class Color {
     this.hex = Color.rgbToHEX(this.r, this.g, this.b);
   }
 
+  inverse() {
+    return new Color(255-this.r, 255-this.g, 255-this.b);
+  }
+
   static intToHex(color) {
     const hex = color.toString(16);
     return hex.length <= 1 ? ('0' + hex) : hex;

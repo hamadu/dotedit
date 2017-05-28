@@ -27,6 +27,7 @@
         :offset-y="offsetY"
         :offset-x="offsetX"
         :dots="dots"
+        :selectDots="selectDots"
         :color-map="colorMap"
       />
 
@@ -73,6 +74,9 @@ export default {
     },
     dots: function() {
       return this.canvasManager.currentDots();
+    },
+    selectDots: function() {
+      return this.canvasManager.currentSelectDots();
     },
     canvasState: function() {
       return this.canvasManager.currentState();

@@ -25,7 +25,7 @@
 <script>
 export default {
   name: 'dot-canvas',
-  props: ['dots', 'colorMap', 'dotsize', 'canvasWidth', 'width', 'height', 'offsetX', 'offsetY'],
+  props: ['dots', 'selectDots', 'colorMap', 'dotsize', 'canvasWidth', 'width', 'height', 'offsetX', 'offsetY'],
   mounted: function() {
     this.drawGrid();
     this.update();
@@ -41,6 +41,10 @@ export default {
     },
 
     dots: function() {
+      this.update();
+    },
+
+    selectDots: function() {
       this.update();
     },
 
@@ -65,7 +69,12 @@ export default {
         for (var x = 0 ; x < this.width ; x++) {
           const ay = y + this.offsetY;
           const ax = x + this.offsetX;
-          ctx.fillStyle = this.colorMap.color(this.dots[ay*len+ax]);
+          const idx = ay*len+ax;
+          if (this.selectDots[idx]) {
+            ctx.fillStyle = this.colorMap.inverseColor(this.dots[idx]);
+          } else {
+            ctx.fillStyle = this.colorMap.color(this.dots[idx]);
+          }
           ctx.fillRect(x * this.dotsize, y * this.dotsize, this.dotsize, this.dotsize);
         }
       }

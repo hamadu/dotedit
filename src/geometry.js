@@ -54,6 +54,20 @@ export default class Geometry {
     return dots;
   }
 
+  static fillRect(fy, fx, ty, tx) {
+    const dots = [];
+    const minX = Math.min(fx, tx);
+    const maxX = Math.max(fx, tx);
+    const minY = Math.min(fy, ty);
+    const maxY = Math.max(fy, ty);
+    for (let x = minX ; x <= maxX ; x++) {
+      for (let y = minY ; y <= maxY ; y++) {
+        dots.push([y, x]);
+      }
+    }
+    return dots;
+  }
+
   static oval(fy, fx, ty, tx) {
     const dots = [];
     if (fx > tx) {

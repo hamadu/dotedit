@@ -29,6 +29,10 @@ export default class CanvasManager {
     return this.currentCanvas.dots
   }
 
+  currentSelectDots() {
+    return this.currentCanvas.selectDots
+  }
+
   currentState() {
     return this.currentCanvas.state
   }
