@@ -106,6 +106,10 @@ export default {
       this.canvasManager.redo()
     },
 
+    selectAll: function() {
+      this.canvasManager.selectAll()
+    },
+
     changeOffset: function(y, x) {
       this.canvasManager.changeOffset(y, x)
     }

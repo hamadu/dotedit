@@ -39,7 +39,11 @@ function createWindow () {
         {role: 'paste'},
         {role: 'pasteandmatchstyle'},
         {role: 'delete'},
-        {role: 'selectall'}
+        {
+          label: 'Select All',
+          accelerator: 'CommandOrControl+A',
+          click() { win.webContents.send('edit', 'select-all') }
+        }
       ]
     },
     {

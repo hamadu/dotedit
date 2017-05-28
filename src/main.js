@@ -19,6 +19,9 @@ Electron.ipcRenderer.on('edit', (event, subMenu) => {
     case 'redo':
       App.methods.redo.bind(App.data())()
       break
+    case 'select-all':
+      App.methods.selectAll.bind(App.data())()
+      break
   }
 })
 

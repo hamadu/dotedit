@@ -14,11 +14,15 @@ export default class Drawer {
   }
 
   indexInDot(y, x) {
-    return y * this.width + x;
+    return y * this.width + x
   }
 
   clearSelection() {
-    this.selectDots.splice(0, this.selectDots.length, ...this.falseDots);
+    this.selectDots.splice(0, this.selectDots.length, ...this.falseDots)
+  }
+
+  selectAll() {
+    this.select(0, 0, this.height, this.width)
   }
 
   select(fy, fx, ty, tx) {

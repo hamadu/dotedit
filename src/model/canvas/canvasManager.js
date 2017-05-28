@@ -51,6 +51,10 @@ export default class CanvasManager {
     this.currentDots().splice(0, len, ...this.currentHistory().next())
   }
 
+  selectAll() {
+    this.drawer.selectAll()
+  }
+
   changeOffset(y, x) {
     const state = this.currentState()
     state.offsetY = y
