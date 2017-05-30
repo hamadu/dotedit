@@ -26,9 +26,6 @@ export default class ColorSet {
     for (let gray = 25 ; gray >= 1 ; gray--) {
       colors.push(Color.fromRGB(gray * 10 + 5, gray * 10 + 5, gray * 10 + 5));
     }
-
-
-
     return this.fromColors('default', colors);
   }
 

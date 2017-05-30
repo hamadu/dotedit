@@ -13,12 +13,13 @@ export default class ColorMap {
   }
 
   addColorSet(colorSet) {
-    this.colorSets.push(colorSet);
-    this.selectedColorIndex = this.colorSets.length - 1;
+    this.colorSets.push(colorSet)
+    this.currentColorSet = colorSet
+    this.selectedColorIndex = 0
   }
 
   colors() {
-    return this.currentColorSet.colors;
+    return this.currentColorSet.colors
   }
 
   color(idx) {

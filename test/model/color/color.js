@@ -23,7 +23,7 @@ describe('rgbToHEX', function () {
 
 describe('hexToRGB', function () {
   it('light-green', function () {
-    assert.deepEqual(Color.hexToRGB('00ff7f'), [0, 255, 127])
+    assert.deepEqual (Color.hexToRGB('00ff7f'), [0, 255, 127])
   })
 
   it('purple', function () {
