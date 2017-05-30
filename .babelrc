@@ -1,4 +1,7 @@
 {
+  "plugins": [
+    "babel-root-slash-import"
+  ],
   "presets": [
     ["latest", {
       "es2015": {}

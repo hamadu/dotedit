@@ -39,19 +39,23 @@ export default class Geometry {
 
   static rect(fy, fx, ty, tx) {
     const dots = [];
-    const minX = Math.min(fx, tx);
-    const maxX = Math.max(fx, tx);
-    const minY = Math.min(fy, ty);
-    const maxY = Math.max(fy, ty);
+    if (fy == ty && fx == tx) {
+      return [[fy, fx]]
+    }
+
+    const minX = Math.min(fx, tx)
+    const maxX = Math.max(fx, tx)
+    const minY = Math.min(fy, ty)
+    const maxY = Math.max(fy, ty)
     for (let x = minX ; x <= maxX ; x++) {
-      dots.push([minY, x]);
-      dots.push([maxY, x]);
+      dots.push([minY, x])
+      dots.push([maxY, x])
     }
-    for (let y = minY ; y <= maxY ; y++) {
-      dots.push([y, minX]);
-      dots.push([y, maxX]);
+    for (let y = minY + 1 ; y <= maxY - 1 ; y++) {
+      dots.push([y, minX])
+      dots.push([y, maxX])
     }
-    return dots;
+    return dots
   }
 
   static fillRect(fy, fx, ty, tx) {

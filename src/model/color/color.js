@@ -1,13 +1,13 @@
 export default class Color {
   constructor(r, g, b) {
-    this.r = Math.floor(r);
-    this.g = Math.floor(g);
-    this.b = Math.floor(b);
-    this.hex = Color.rgbToHEX(this.r, this.g, this.b);
+    this.r = Math.floor(r)
+    this.g = Math.floor(g)
+    this.b = Math.floor(b)
+    this.hex = Color.rgbToHEX(this.r, this.g, this.b)
   }
 
   inverse() {
-    return new Color(255-this.r, 255-this.g, 255-this.b);
+    return new Color(255-this.r, 255-this.g, 255-this.b)
   }
 
   static intToHex(color) {
