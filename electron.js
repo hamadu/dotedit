@@ -25,18 +25,30 @@ function createWindow () {
       submenu: [
         {
           label: 'Undo',
-          accelerator: 'CommandOrControl+Z',
+          accelerator: 'CmdOrCtrl+Z',
           click() { win.webContents.send('edit', 'undo') }
         },
         {
           label: 'Redo',
-          accelerator: 'Shift+CommandOrControl+Z',
+          accelerator: 'Shift+CmdOrCtrl+Z',
           click() { win.webContents.send('edit', 'redo') }
         },
         {type: 'separator'},
-        {role: 'cut'},
-        {role: 'copy'},
-        {role: 'paste'},
+        {
+          label: 'Cut',
+          accelerator: 'CmdOrCtrl+X',
+          click() { win.webContents.send('edit', 'cut') }
+        },
+        {
+          label: 'Copy',
+          accelerator: 'CmdOrCtrl+C',
+          click() { win.webContents.send('edit', 'copy') }
+        },
+        {
+          label: 'Paste',
+          accelerator: 'CmdOrCtrl+V',
+          click() { win.webContents.send('edit', 'paste') }
+        },
         {role: 'pasteandmatchstyle'},
         {
           label: 'Delete',
@@ -45,7 +57,7 @@ function createWindow () {
         },
         {
           label: 'Select All',
-          accelerator: 'CommandOrControl+A',
+          accelerator: 'CmdOrCtrl+A',
           click() { win.webContents.send('edit', 'select-all') }
         }
       ]

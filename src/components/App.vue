@@ -53,6 +53,7 @@ import PreviewCanvas from './PreviewCanvas.vue'
 import CursorInfo from './CursorInfo.vue'
 import IOTool from './IOTool.vue'
 
+import Electron from 'electron'
 
 const data = {
   canvasManager: CanvasManager.getInstance(),
@@ -104,6 +105,29 @@ export default {
 
     redo: function() {
       this.canvasManager.redo()
+    },
+
+    cut: function() {
+      const selectedDots = this.canvasManager.currentCanvas.getSelectedDots()
+      Electron.clipboard.writeText(JSON.stringify(selectedDots))
+      this.canvasManager.deleteSelection()
+    },
+
+    copy: function() {
+      const selectedDots = this.canvasManager.currentCanvas.getSelectedDots()
+      Electron.clipboard.writeText(JSON.stringify(selectedDots))
+    },
+
+    paste: function() {
+      try {
+        const dots = JSON.parse(Electron.clipboard.readText())
+        this.toolSet.selectToolByName('Select')
+        const selectTool = this.toolSet.currentTool
+        selectTool.selectFromPaste(this.canvasManager.drawer, dots)
+        // selectFromPaste
+      } catch (e) {
+        console.error(e)
+      }
     },
 
     deleteSelection: function() {

@@ -43,12 +43,14 @@ export default class Drawer {
     })
   }
 
-  moveByDiff(baseDots, baseSelection, dy, dx) {
-    for (let y = 0 ; y < this.height ; y++) {
-      for (let x = 0 ; x < this.width ; x++) {
-        const idx = y * this.width + x
-        if (baseSelection[idx]) {
-          this.dot(y, x, 0);
+  moveByDiff(baseDots, baseSelection, dy, dx, moveType) {
+    if (moveType === 'move') {
+      for (let y = 0 ; y < this.height ; y++) {
+        for (let x = 0 ; x < this.width ; x++) {
+          const idx = y * this.width + x
+          if (baseSelection[idx]) {
+            this.dot(y, x, 0);
+          }
         }
       }
     }

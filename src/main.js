@@ -19,6 +19,15 @@ Electron.ipcRenderer.on('edit', (event, subMenu) => {
     case 'redo':
       App.methods.redo.bind(App.data())()
       break
+    case 'cut':
+      App.methods.cut.bind(App.data())()
+      break
+    case 'copy':
+      App.methods.copy.bind(App.data())()
+      break
+    case 'paste':
+      App.methods.paste.bind(App.data())()
+      break
     case 'delete':
       App.methods.deleteSelection.bind(App.data())()
       break

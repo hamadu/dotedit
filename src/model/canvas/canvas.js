@@ -17,6 +17,19 @@ export default class Canvas {
     this.state = new CanvasState()
   }
 
+  getSelectedDots() {
+    const selectedDots = []
+    for (let i = 0 ; i < this.height ; i++) {
+      for (let j = 0 ; j < this.width ; j++) {
+        const idx = i * this.width + j
+        if (this.selectDots[idx]) {
+          selectedDots.push([i, j, this.dots[idx]])
+        }
+      }
+    }
+    return selectedDots
+  }
+
   changeCanvasSize(newHeight, newWidth) {
     const newDots = []
     const newSelectDots = []

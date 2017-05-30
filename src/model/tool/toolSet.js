@@ -13,7 +13,9 @@ export default class ToolSet {
 
   selectTool(newTool) {
     if (this.currentTool === newTool) {
-      this.currentTool.toggle()
+      if (typeof this.currentTool.toggle === 'function') {
+        this.currentTool.toggle()
+      }
     } else {
       this.currentTool = newTool
     }
